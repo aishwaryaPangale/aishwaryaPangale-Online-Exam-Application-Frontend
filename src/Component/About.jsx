@@ -2,13 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
 
-
-
-const Home = () => {
-
+let About = () => {
   const navigate = useNavigate(); // ✅ Fix: use useNavigate()
 
   return (
@@ -24,11 +22,11 @@ const Home = () => {
             </button>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav ms-auto">
-                <li className="nav-item">
+                <li className="nav-item"> 
                   <a className="nav-link" aria-current="page" href="#" onClick={() => navigate("/")}>Home</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="" onClick={() => navigate("/about")}>About</a>
+                  <a className="nav-link" href="">About</a>
                 </li>
                 <li className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -45,50 +43,57 @@ const Home = () => {
             </div>
           </div>
         </nav>
+    </div>
 
-        <section>
+    {/* <section>
           <div className="container">
-            <h1>Online Learning Now <br />in Your Hand</h1>
+             <h1>Online Learning Now <br />in Your Hand</h1>
             <p>Online Education is a form of education where students use <br />their home computers through the internet.</p>
-            <button className="btn btn-outline-warning text-dark p-2 m-1 text-light" onClick={() => navigate("/reg")}>Register</button>
-            <button className="btn btn-outline-success text-dark p-2 m-2" onClick={() => navigate("/login")}>Login</button>
+            <button className="btn btn-warning p-2 m-1 text-light" onClick={() => navigate("/reg")}>Register</button>
+            <button className="btn btn-success p-2 m-2">Login</button>
           </div>
           <img src="src/Images/boss.png" alt="" />
-          {/* <div class="custom-shape-divider-bottom-1743572336">
-    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
-    </svg>
-</div> */}
-        </section>
+    </section>  */}
 
-        <div className="Category">
-      <h1>Featured Category</h1>
-      <p>Some of the featured exam categories are listed here to view category</p>
-<div className="cardimg">
-<div class="card shadow-lg" style={{width:"18rem"}} >
-  <img src="src\Images\c_cpp.jpg" class="card-img-top" alt="..." height="200px" width="100px" />
-  <div class="card-body">
-    <h3>C Programing</h3>
-    <p>Exam</p>
-      </div>
-</div>
-<div class="card shadow-lg" style={{width:"18rem"}}>
-  <img src="src\Images\java.jpg" alt="" width="250px"/>
-  <div class="card-body">
-      <h3 class="mt-3">Programing</h3>
-      <p>Exam</p>
-   </div>
-</div>
-<div class="card shadow-lg" style={{width:"18rem"}}>
-  <img src="src\Images\Apti.png" class="card-img-top" alt="..."/>
-  <div class="card-body">
-  <h3  class="mt-3">Aptitude</h3>
-  <p>Exam</p>
-  </div>
-</div>
-</div>
-</div>
-        <div className="container-fluid p-5 bg-black">
+    {/* <div className="box w-100 d-flex justify-content-center gap-4 " style={{border:"1px solid blck", height:"150px"}} >
+        <div class="card shadow-lg" style={{width: "20rem"}}>
+            <i class="fa-solid fa-graduation-cap" style={{width:"200px", height:"100px"}}></i>
+             <img src="\src\Images\missionLogo.png" class="card-img-top" alt="..." height="px" width="px"/> 
+           <div class="card-body">
+              <p class="card-text">We provide a secure, reliable, and user-friendly exam platform.</p>
+            </div>
+        </div>
+
+         <div class="card shadow-lg" style={{width: "20rem"}}>
+            <img src="..." class="card-img-top" alt="..."/>
+            <div class="card-body">
+               <p class="card-text">To lead the future of digital academic assessments globally.</p>
+            </div>
+         </div>
+
+          <div class="card shadow-lg" style={{width: "20rem"}}>
+             <img src="..." class="card-img-top" alt="..."/>
+            <div class="card-body">
+               <p class="card-text">Our focus is on security, scalability, and continuous innovation..</p>
+            </div>
+          </div>
+     </div> */}
+
+      {/* <div className="about-info w-100" style={{border:"1px solid black", marginTop:"120px"}}> */}
+           <div className="row1 d-flex w-100 p-5"> 
+               <div className="col1 w-50 shadow-lg p-4 ">
+                   <p className="fw-bolder opacity-50">About us</p>
+                   <h1 className="fw-semibold opacity-75">Welcome to the Application- all available Online Exam</h1>
+                   <p className="mt-4 fw-normal opacity-75">Welcome to the Online Exam Application System, a modern solution designed to streamline and simplify the process of conducting examinations online. Our platform provides a secure, efficient, and user-friendly environment for students, educators, and administrators.</p>
+               </div>
+               
+               <div className="col1 w-50">
+                  <img src="src\Images\educ1.jpg" alt="" style={{width:"600px", height:"400px"}}/>
+               </div>
+           </div>
+      {/* </div> */}
+
+      <div className="container-fluid p-5 bg-black">
           <div className="footer text-light">
             <div className="row">
               <div className="col">
@@ -123,9 +128,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </div>
-    </>
-  );
-};
 
-export default Home;
+    </>);
+};
+export default About;
