@@ -9,6 +9,7 @@ let Home = () => {
 
   return (
     <>
+    <h1>welcome</h1>
       <div className="main-Home">
         <nav className="navbar navbar-expand-lg navbar-dark static-top shadow p-3 rounded sticky-top">
           <div className="container">
@@ -21,7 +22,7 @@ let Home = () => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#" onClick={() => navigate("/")}>Home</a>
+                  <a className="nav-link" aria-current="page" href="#" >Home</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="" onClick={() => navigate("/about")}>About</a>
