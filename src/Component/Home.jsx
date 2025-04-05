@@ -13,7 +13,6 @@ const Home = () => {
 
   return (
     <>
-    <h1>welcome</h1>
       <div className="main-Home">
         <nav className="navbar navbar-expand-lg navbar-dark static-top shadow p-3 rounded sticky-top">
           <div className="container">
