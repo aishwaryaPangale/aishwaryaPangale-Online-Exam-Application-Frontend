@@ -4,7 +4,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 
-let Home = () => {
+
+
+
+const Home = () => {
+
   const navigate = useNavigate(); // ✅ Fix: use useNavigate()
 
   return (
@@ -46,10 +50,15 @@ let Home = () => {
           <div className="container">
             <h1>Online Learning Now <br />in Your Hand</h1>
             <p>Online Education is a form of education where students use <br />their home computers through the internet.</p>
-            <button className="btn btn-warning p-2 m-1 text-light" onClick={() => navigate("/reg")}>Register</button>
-            <button className="btn btn-success p-2 m-2">Login</button>
+            <button className="btn btn-outline-warning text-dark p-2 m-1 text-light" onClick={() => navigate("/reg")}>Register</button>
+            <button className="btn btn-outline-success text-dark p-2 m-2" onClick={() => navigate("/login")}>Login</button>
           </div>
           <img src="src/Images/boss.png" alt="" />
+          {/* <div class="custom-shape-divider-bottom-1743572336">
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+    </svg>
+</div> */}
         </section>
 
         <div className="Category">
@@ -73,8 +82,8 @@ let Home = () => {
 <div class="card shadow-lg" style={{width:"18rem"}}>
   <img src="src\Images\Apti.png" class="card-img-top" alt="..."/>
   <div class="card-body">
-      <h3  class="mt-3">Aptitude</h3>
-      <p>Exam</p>
+  <h3  class="mt-3">Aptitude</h3>
+  <p>Exam</p>
   </div>
 </div>
 </div>
