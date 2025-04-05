@@ -3,10 +3,6 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
-
-
-
-
 const Home = () => {
 
   const navigate = useNavigate(); // ✅ Fix: use useNavigate()
