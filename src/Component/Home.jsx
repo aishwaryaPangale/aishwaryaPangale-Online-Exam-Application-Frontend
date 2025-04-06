@@ -1,11 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 const Home = () => {
 
-  const navigate = useNavigate(); // ✅ Fix: use useNavigate()
+  const navigate = useNavigate(); 
 
   return (
     <>
@@ -21,20 +21,20 @@ const Home = () => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#" >Home</a>
+                  {/* <a className="nav-link" aria-current="page" href="#" >Home</a> */}
+                  <NavLink to='/' className='navlink'>Home</NavLink>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="" onClick={() => navigate("/about")}>About</a>
+                  <NavLink to='/about' className='navlink'>About</NavLink>
                 </li>
                 <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Course
-                  </a>
+                  <NavLink className="navlink dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Profile
+                  </NavLink>
                   <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a className="dropdown-item text-dark" href="#">C</a></li>
-                    <li><a className="dropdown-item text-dark" href="#">Java</a></li>
+                    <li><NavLink to='/admin' className='navlink text-dark p-3'>Admin</NavLink></li>
                     <li><hr className="dropdown-divider" /></li>
-                    <li><a className="dropdown-item text-dark" href="#">Aptitude</a></li>
+                    <li><NavLink to='/AdminDashboard' className='navlink text-dark p-3'>Student</NavLink></li>
                   </ul>
                 </li>
               </ul>
