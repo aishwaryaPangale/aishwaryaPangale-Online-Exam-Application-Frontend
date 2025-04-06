@@ -224,30 +224,45 @@ section .container img{
   
 }
 /* Admin DashBoard */
-.sidebar {
-  height: 100vh;
+.menu-list {
+  list-style: none;
+  padding: 0;
   width: 250px;
-  position: fixed;
-  background-color: #212529;
+  background-color: #B877ED;
   color: white;
-  padding-top: 20px;
+  height: 100vh; 
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 20px;
+  overflow-y: auto; /* Enables scrolling */
+  scrollbar-width: none;
 }
-.sidebar select{
-  background-color:#212529 ;
-  border: 0;
-  outline: 0;
-  color: white;
+.logo-container {
+  text-align: center;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.sidebar a {
-  padding: 10px 15px;
-  display: block;
+.menu-item {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navlink {
   color: white;
   text-decoration: none;
 }
-.sidebar a:hover {
-  background-color: #495057;
+
+.navlink:hover {
+  color: #f1c40f;
 }
-.content {
-  margin-left: 250px;
-  padding: 20px;
+
+.dropdown-list {
+  list-style: none;
+  padding-left: 30px;
+  background-color: #B877ED;
 }
+

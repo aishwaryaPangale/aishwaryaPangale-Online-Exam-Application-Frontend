@@ -18,8 +18,8 @@ function App() {
         <Route path="/reg" element={<Register />} />
 
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/admin" element={<AdminDashboard/>}/>
-        <Route path="/addCourse" element={<AddCourse/>}/>
+        <Route path="/admin" element={<AdminDashboard/>}/>
+        {/* <Route path="/addCourse" element={<AddCourse/>}/>
         <Route path="/viewCourse" element={<ViewCourse/>}/> */}
 
         <Route path="/about" element={<About/>}/>
