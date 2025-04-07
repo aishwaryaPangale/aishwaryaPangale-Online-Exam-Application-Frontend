@@ -8,6 +8,8 @@ import "./index.css";
 import AdminDashboard from "./AdminDashBoard/AdminDashboard";
 import AddCourse from "./AdminDashBoard/AddCourse";
 import ViewCourse from "./AdminDashBoard/ViewCourse";
+import ForgotPassword from "./Component/ForgotPassword";
+
 
 
 function App() {
@@ -23,6 +25,9 @@ function App() {
         <Route path="/viewCourse" element={<ViewCourse/>}/> */}
 
         <Route path="/about" element={<About/>}/>
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+       
+
 
       </Routes>
     </Router>
