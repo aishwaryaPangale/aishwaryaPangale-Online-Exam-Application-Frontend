@@ -9,7 +9,7 @@ const Home = () => {
   const navigate = useNavigate(); 
 
   return (
-    <>
+  
       <div className="main-Home">
         <nav className="navbar navbar-expand-lg navbar-dark static-top shadow p-3 rounded sticky-top">
           <div className="container">
@@ -141,7 +141,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-    </>
+  </div>
   );
 };
 
