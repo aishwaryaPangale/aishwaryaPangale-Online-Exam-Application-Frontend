@@ -9,6 +9,7 @@ import AdminDashboard from "./AdminDashBoard/AdminDashboard";
 import AddCourse from "./AdminDashBoard/AddCourse";
  import ViewCourse from "./AdminDashBoard/ViewCourse";
 import ForgotPassword from "./Component/ForgotPassword";
+import AdminLogin from "./AdminDashBoard/AdminLogin"
 import Navbar from "./Component/Navbar";
 
 
@@ -23,9 +24,13 @@ function App() {
         <Route path="/reg" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+
+        <Route path="alogin" element={<AdminLogin/>}/>
+      
         <Route path="/admin" element={<AdminDashboard/>}/>
         <Route path="/addcourse" element={<><AdminDashboard /><AddCourse /></>} />
         <Route path="/viewcourses" element={<><AdminDashboard /><ViewCourse /></>} />
+
 
 
       </Routes>
