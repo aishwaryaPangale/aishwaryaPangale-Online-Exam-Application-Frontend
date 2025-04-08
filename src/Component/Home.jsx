@@ -10,73 +10,19 @@ const Home = () => {
 
   return (
     <>
-      <div className="main-Home">
-        <nav className="navbar navbar-expand-lg navbar-dark static-top shadow p-3 rounded sticky-top">
-          <div className="container">
-            <a className="navbar-brand" href="#">
-              <img src="src/Images/download-removebg-preview.png" alt="..." height="60" />
-            </a>
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul className="navbar-nav ms-auto">
-                <li className="nav-item">
-                  {/* <a className="nav-link" aria-current="page" href="#" >Home</a> */}
-                  <NavLink to='/' className='navlink'>Home</NavLink> 
-                </li>
-                <li className="nav-item">
-                  <NavLink to='/about' className='navlink'>About</NavLink>
-                </li>
-                
-                <li className="nav-item dropdown">
-                <NavLink  className="nav-link dropdown-toggle text-light" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profile</NavLink>                      
-
-                  <ul className="dropdown-menu bg-dark">
-
-                    {/* Admin Submenu */}
-                    <li className="dropdown-submenu dropend">
-                       <NavLink  className="nav-link text-light" to="/login" role="button"  aria-expanded="false">Admin</NavLink>                      
-                         {/* <ul className="dropdown-menu bg-dark">
-                            <li><NavLink className="dropdown-item text-light" to="/admin/login"> Login</NavLink></li>
-                           <li><hr className="dropdown-divider" /></li>
-                           <li><NavLink className="dropdown-item text-light" to="/admin/register">Register</NavLink></li>
-                          </ul> */}
-                   </li>
-
-                   <li><hr className="dropdown-divider" /></li>
-
-                    {/* Student Submenu */}
-                    <li className="dropdown-submenu dropend">
-                    <NavLink  className="nav-link dropdown-toggle text-light" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Student</NavLink>                      
-                    <ul className="dropdown-menu bg-dark">
-                         <li><NavLink className="dropdown-item text-light" to="/login">Login</NavLink></li>
-                         <li><hr className="dropdown-divider" /></li>
-                         <li><NavLink className="dropdown-item text-light" to="/reg">Register</NavLink></li>
-                      </ul>
-                    </li>
-
-                 </ul>
-              </li>
-
-              </ul>
-            </div>
-          </div>
-        </nav>
-
         <section>
           <div className="container">
             <h1>Online Learning Now <br />in Your Hand</h1>
             <p>Online Education is a form of education where students use <br />their home computers through the internet.</p>
-            <button className="btn btn-outline-warning text-dark p-2 m-1 text-light" onClick={() => navigate("/reg")}>Register</button>
-            <button className="btn btn-outline-success text-dark p-2 m-2" onClick={() => navigate("/login")}>Login</button>
+            {/* <button className="btn btn-outline-warning text-dark p-2 m-1 text-light" onClick={() => navigate("/reg")}>Register</button>
+            <button className="btn btn-outline-success text-dark p-2 m-2" onClick={() => navigate("/login")}>Login</button> */}
           </div>
           <img src="src/Images/boss.png" alt="" />
-          {/* <div class="custom-shape-divider-bottom-1743572336">
+          <div class="custom-shape-divider-bottom-1743572336">
     <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
         <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
     </svg>
-</div> */}
+</div>
         </section>
 
         <div className="Category">
@@ -106,7 +52,7 @@ const Home = () => {
 </div>
 </div>
 </div>
-        <div className="container-fluid p-5 bg-black">
+        <div className="container-fluid p-5 bg-black" style={{marginTop:"100px"}}>
           <div className="footer text-light">
             <div className="row">
               <div className="col">
@@ -141,7 +87,6 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </div>
     </>
   );
 };

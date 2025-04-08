@@ -53,7 +53,7 @@ const Login = () => {
             setMessage("❌ All fields are required!");
             return;
         }
-
+    
         try {
             setLoading(true);
             const response = await axios.post("http://localhost:8081/api/auth/verify-otp", {
@@ -62,15 +62,19 @@ const Login = () => {
                 password,
                 otp,
             });
-
+    
             setMessage(response.data.message || "✅ Login successful!");
-            navigate("/admin");
+            setTimeout(() => {
+                navigate("/admin");
+            }, 1500);
+    
         } catch (error) {
             setMessage(error.response?.data?.message || "❌ Invalid OTP or credentials!");
         } finally {
             setLoading(false);
         }
     };
+    
 
     return (
         <div className="Register">
