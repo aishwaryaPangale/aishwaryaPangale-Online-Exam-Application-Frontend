@@ -60,7 +60,7 @@ const Register = () => {
           style={{ top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
           onClick={() => navigate(-1)}
         />
-        <h2 className="text-center text-warning">Registration</h2>
+        <h2 className="text-center text-warning">Register</h2>
         {message && <p style={{ color: message.includes("❌") ? "red" : "green" }}>{message}</p>}
         <form onSubmit={handleSubmit}>
           <div className="row g-2">
