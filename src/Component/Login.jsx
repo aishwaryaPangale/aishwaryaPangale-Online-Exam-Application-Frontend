@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { IoMdCloseCircle } from "react-icons/io";
 
 const Login = () => {
     const navigate = useNavigate();
 
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [otp, setOtp] = useState("");
@@ -14,10 +15,6 @@ const Login = () => {
     const [message, setMessage] = useState("");
     const [countdown, setCountdown] = useState(0);
 
-    const [showForgotPassword, setShowForgotPassword] = useState(false);
-    const [forgotEmail, setForgotEmail] = useState("");
-
-    // Countdown logic
     useEffect(() => {
         let timer;
         if (otpSent && countdown > 0) {
@@ -33,8 +30,8 @@ const Login = () => {
     };
 
     const sendOtp = async () => {
-        if (!email) {
-            setMessage("❌ Please enter a valid email!");
+        if (!email || !username) {
+            setMessage("❌ Please enter both username and email!");
             return;
         }
 
@@ -42,9 +39,7 @@ const Login = () => {
             setLoading(true);
             const response = await axios.post("http://localhost:8081/api/auth/send-otp", { email });
             setOtpSent(true);
-            setCountdown(300); // 5 minutes
-            setOtp("");
-            setPassword("");
+            setCountdown(300);
             setMessage(response.data.message || "✅ OTP sent successfully!");
         } catch (error) {
             setMessage(error.response?.data?.message || "❌ Failed to send OTP!");
@@ -53,8 +48,8 @@ const Login = () => {
         }
     };
 
-    const verifyOtpAndRegister = async () => {
-        if (!email || !password || !otp) {
+    const verifyOtpAndLogin = async () => {
+        if (!username || !email || !password || !otp) {
             setMessage("❌ All fields are required!");
             return;
         }
@@ -62,34 +57,16 @@ const Login = () => {
         try {
             setLoading(true);
             const response = await axios.post("http://localhost:8081/api/auth/verify-otp", {
+                username,
                 email,
                 password,
                 otp,
             });
 
-            setMessage(response.data.message || "✅ User Login successfully!");
+            setMessage(response.data.message || "✅ Login successful!");
             navigate("/admin");
         } catch (error) {
-            setMessage(error.response?.data?.message || "❌ Invalid OTP!");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleForgotPassword = async () => {
-        if (!forgotEmail) {
-            setMessage("❌ Please enter your email.");
-            return;
-        }
-
-        try {
-            setLoading(true);
-            const response = await axios.post("http://localhost:8081/api/auth/forgot-password", {
-                email: forgotEmail,
-            });
-            setMessage(response.data.message || "✅ Reset link sent to your email!");
-        } catch (error) {
-            setMessage(error.response?.data?.message || "❌ Failed to send reset link!");
+            setMessage(error.response?.data?.message || "❌ Invalid OTP or credentials!");
         } finally {
             setLoading(false);
         }
@@ -100,144 +77,112 @@ const Login = () => {
             <div className="container shadow p-5 position-relative" style={{ width: "400px", height: "auto" }}>
                 <IoMdCloseCircle
                     size={28}
-                    className="position-absolute d-flex justify-content-end"
+                    className="position-absolute"
                     style={{ top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
                     onClick={() => navigate(-1)}
                 />
                 <h2 className="text-warning text-center">Login</h2>
+
                 {message && (
                     <p style={{ color: message.includes("❌") ? "red" : "green" }}>
                         {message}
                     </p>
                 )}
 
-                {!showForgotPassword ? (
+                {/* Username */}
+                <div className="form-floating mt-3">
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        disabled={otpSent}
+                    />
+                    <label htmlFor="username">Username</label>
+                </div>
+
+                {/* Email */}
+                <div className="form-floating mt-3">
+                    <input
+                        type="email"
+                        className="form-control"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        disabled={otpSent}
+                    />
+                    <label htmlFor="email">Email</label>
+                </div>
+
+                {/* Forgot Password */}
+                {!otpSent && (
+                    <div className="text-end mt-1">
+                        <Link to="/forgot-password" className="btn btn-link text-primary p-0" style={{ fontSize: "14px" }}>
+           
+                            Forgot Password?
+                        </Link>
+                    </div>
+                )}
+
+                {/* Send OTP Button */}
+                {!otpSent || countdown <= 0 ? (
+                    <button
+                        onClick={sendOtp}
+                        disabled={loading}
+                        className="btn btn-success w-50 mt-3"
+                    >
+                        {loading ? "Sending OTP..." : "Send OTP"}
+                    </button>
+                ) : null}
+
+                {/* Password + OTP + Countdown + Login Button */}
+                {otpSent && (
                     <>
-                        {/* Email Input */}
-                        <div className="col-md mt-4">
-                            <div className="form-floating">
-                                <input
-                                    type="email"
-                                    name="email"
-                                    className="form-control"
-                                    id="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    disabled={otpSent}
-                                />
-                                <label htmlFor="email">Email Address</label>
-                            </div>
-                        </div>
-                        <br />
-
-                        {!otpSent || countdown <= 0 ? (
-                            <button
-                                onClick={sendOtp}
-                                disabled={loading}
-                                className="btn btn-success w-50"
-                                style={{ marginLeft: "60px" }}
-                            >
-                                {loading ? "Sending OTP..." : otpSent ? "Resend OTP" : "Send OTP"}
-                            </button>
-                        ) : null}
-
-                        {!otpSent && (
-                            <button
-                                type="button"
-                                className="btn btn-link text-light w-100 text-end"
-                                onClick={() => setShowForgotPassword(true)}>
-                                Forgot Password?
-                            </button>
-                        )}
-
-                        {otpSent && (
-                            <>
-                                {/* Password Input */}
-                                <div className="col-md mt-3">
-                                    <div className="form-floating">
-                                        <input
-                                            type="password"
-                                            name="password"
-                                            className="form-control"
-                                            id="password"
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                        />
-                                        <label htmlFor="password">Password</label>
-                                    </div>
-                                </div>
-                                <br />
-
-                                {/* OTP Input */}
-                                <div className="col-md">
-                                    <div className="form-floating">
-                                        <input
-                                            type="text"
-                                            name="otp"
-                                            className="form-control"
-                                            id="otp"
-                                            value={otp}
-                                            onChange={(e) => setOtp(e.target.value)}
-                                        />
-                                        <label htmlFor="otp">Enter OTP</label>
-                                    </div>
-                                    {countdown > 0 && (
-                                        <div className="text-end mt-2" style={{ color: "white", fontSize: "14px" }}>
-                                            ⏳ Resend in: {formatTime(countdown)}
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* Verify Button */}
-                                <button
-                                    onClick={verifyOtpAndRegister}
-                                    disabled={loading}
-                                    className="btn btn-outline-primary w-50 mt-4"
-                                    style={{ marginLeft: "60px" }}
-                                >
-                                    {loading ? "Verifying..." : "Verify & Login"}
-                                </button>
-                            </>
-                        )}
-                    </>
-                ) : (
-                    <>
-                        {/* Forgot Password Mode */}
-                        <div className="form-floating mt-4">
+                        {/* Password */}
+                        <div className="form-floating mt-3">
                             <input
-                                type="email"
+                                type="password"
                                 className="form-control"
-                                id="forgotEmail"
-                                placeholder="Enter your email"
-                                value={forgotEmail}
-                                onChange={(e) => setForgotEmail(e.target.value)}
+                                id="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
-                            <label htmlFor="forgotEmail">Enter your email</label>
+                            <label htmlFor="password">Password</label>
                         </div>
 
-                        <button
-                            onClick={handleForgotPassword}
-                            className="btn btn-outline-info w-100 mt-3"
-                            disabled={loading}
-                        >
-                            {loading ? "Sending..." : "Send Reset Link"}
-                        </button>
+                        {/* OTP */}
+                        <div className="form-floating mt-3">
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="otp"
+                                value={otp}
+                                onChange={(e) => setOtp(e.target.value)}
+                            />
+                            <label htmlFor="otp">Enter OTP</label>
+                        </div>
+
+                        {countdown > 0 && (
+                            <div className="text-end mt-2" style={{ fontSize: "14px" }}>
+                                <h1 class="text-light">⏳ Resend in: {formatTime(countdown)}</h1>
+                            </div>
+                        )}
 
                         <button
-                            className="btn btn-secondary w-100 mt-2"
-                            onClick={() => setShowForgotPassword(false)}
+                            onClick={verifyOtpAndLogin}
+                            disabled={loading}
+                            className="btn btn-outline-primary w-100 mt-4"
                         >
-                            Back to Login
+                            {loading ? "Verifying..." : "Verify & Login"}
                         </button>
                     </>
                 )}
 
-                <div className="mt-4">
-                    <button
-                        type="button"
-                        className="btn btn-outline-warning"
-                        onClick={() => navigate("/reg")}
-                    > Register
+                {/* Register Button */}
+                <div className="mt-4 text-center">
+                    <button className="btn btn-outline-warning" onClick={() => navigate("/reg")}>
+                        Register
                     </button>
                 </div>
             </div>
