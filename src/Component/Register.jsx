@@ -28,11 +28,9 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Sending data to backend:", formData); // ✅ Helpful for debugging
-
     try {
       const response = await axios.post("http://localhost:8081/api/register", formData, {
-        headers: { "Content-Type": "application/json" } // ✅ Ensure JSON
+        headers: { "Content-Type": "application/json" }
       });
 
       if (response.data === "Email already exists") {
@@ -60,8 +58,9 @@ const Register = () => {
           style={{ top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
           onClick={() => navigate(-1)}
         />
-        <h2 className="text-center text-warning">Registration</h2>
+        <h2 className="text-center text-warning">Register</h2>
         {message && <p style={{ color: message.includes("❌") ? "red" : "green" }}>{message}</p>}
+
         <form onSubmit={handleSubmit}>
           <div className="row g-2">
             <div className="col-md-6">
@@ -136,6 +135,7 @@ const Register = () => {
               </div>
             </div>
           </div>
+
           <button type="submit" className="btn btn-warning shadow-sm mt-3">Register</button>
         </form>
       </div>
