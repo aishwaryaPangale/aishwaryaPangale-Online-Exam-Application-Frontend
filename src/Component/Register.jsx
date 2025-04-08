@@ -27,27 +27,30 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("Sending data to backend:", formData);
+  
     try {
       const response = await axios.post("http://localhost:8081/api/register", formData, {
         headers: { "Content-Type": "application/json" }
       });
-
+  
+      console.log("Server response:", response.data); // 👈 helpful debug
+  
       if (response.data === "Email already exists") {
         setMessage("❌ Email already exists");
-      } else {
+      } else if (response.data === "Registered successfully") {
         setMessage("✅ Registration Successful!");
         setTimeout(() => navigate("/login"), 1500);
-      }
-    } catch (err) {
-      if (err.response && err.response.status === 400) {
-        setMessage("❌ Bad Request: Please check all fields.");
       } else {
-        setMessage("❌ Error: " + err.message);
+        setMessage("❌ Unexpected server response.");
       }
+  
+    } catch (err) {
       console.error("Registration error:", err);
+      setMessage("❌ Error: " + err.message);
     }
   };
+  
 
   return (
     <div className="Register">
@@ -61,7 +64,7 @@ const Register = () => {
         <h2 className="text-center text-warning mb-3">Register</h2>
         {message && <p style={{ color: message.includes("❌") ? "red" : "green" }}>{message}</p>}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} class="reg">
           <div className="row g-3">
             <div className="col-md-6">
               <div className="form-floating">
