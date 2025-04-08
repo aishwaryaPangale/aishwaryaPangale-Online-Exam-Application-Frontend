@@ -9,6 +9,7 @@ import AdminDashboard from "./AdminDashBoard/AdminDashboard";
 import AddCourse from "./AdminDashBoard/AddCourse";
 import ViewCourse from "./AdminDashBoard/ViewCourse";
 import ForgotPassword from "./Component/ForgotPassword";
+import AdminLogin from "./AdminDashBoard/AdminLogin";
 
 
 
@@ -26,12 +27,13 @@ function App() {
 
         <Route path="/about" element={<About/>}/>
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="alogin" element={<AdminLogin/>}/>
        
 
 
       </Routes>
     </Router>
   );
-}
+}""
 
 export default App;

@@ -36,7 +36,7 @@ const Home = () => {
 
                     {/* Admin Submenu */}
                     <li className="dropdown-submenu dropend">
-                       <NavLink  className="nav-link text-light" to="/login" role="button"  aria-expanded="false">Admin</NavLink>                      
+                       <NavLink  className="nav-link text-light" to="/alogin" role="button"  aria-expanded="false">Admin</NavLink>                      
                          {/* <ul className="dropdown-menu bg-dark">
                             <li><NavLink className="dropdown-item text-light" to="/admin/login"> Login</NavLink></li>
                            <li><hr className="dropdown-divider" /></li>

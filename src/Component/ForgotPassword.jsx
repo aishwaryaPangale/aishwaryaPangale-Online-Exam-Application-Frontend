@@ -28,13 +28,13 @@ function ForgotPassword() {
   };
 
   return (
-    <div class="container text-center w-50 mt-5 p-5 shadow-lg" style={{ padding: "20px" }}>
-      <h2 class="text-center text-warning">Forgot Password</h2>
-      <form onSubmit={handleSubmit}>
+    <div class="container text-center w-50 mt-5 p-5 shadow-lg bg-secondary bg-opacity-50" style={{ padding: "20px" }}>
+      <h2 class="text-center text-danger">Forgot Password</h2>
+      <form onSubmit={handleSubmit} style={{padding:"10px"}}>
     
         <div className="form-floating mt-3" style={{marginLeft:"80px"}}>
             <input  type="text"
-                        className="form-control w-50" 
+                        className="form-control w-75 shadow-lg" 
                         id="username"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -46,7 +46,7 @@ function ForgotPassword() {
         <br/>
         <div className="form-floating mt-3" style={{marginLeft:"80px"}}>
             <input  type="text"
-                        className="form-control w-50"
+                        className="form-control w-75 shadow-lg"
                         id="New Password"
                         value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
@@ -59,7 +59,7 @@ function ForgotPassword() {
       
         <div className="form-floating mt-3" style={{marginLeft:"80px"}}>
             <input  type="text"
-                        className="form-control w-50"
+                        className="form-control w-75 shadow-lg"
                         id="Confirm Password"
                         value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -69,7 +69,7 @@ function ForgotPassword() {
                 </div>
         
         <br/>
-        <button type="submit" class="btn btn-success">Update Password</button>
+        <button type="submit" class="btn btn-outline-danger">Update Password</button>
       </form>
       {message && <p>{message}</p>}
     </div>
