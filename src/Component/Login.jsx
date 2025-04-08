@@ -119,6 +119,7 @@ const Login = () => {
                 {!otpSent && (
                     <div className="text-end mt-1">
                         <Link to="/forgot-password" className="btn btn-link text-primary p-0" style={{ fontSize: "14px" }}>
+           
                             Forgot Password?
                         </Link>
                     </div>

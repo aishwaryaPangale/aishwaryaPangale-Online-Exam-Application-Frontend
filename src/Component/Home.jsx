@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
+
 const Home = () => {
 
   const navigate = useNavigate(); 
@@ -22,21 +23,42 @@ const Home = () => {
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
                   {/* <a className="nav-link" aria-current="page" href="#" >Home</a> */}
-                  <NavLink to='/' className='navlink'>Home</NavLink>
+                  <NavLink to='/' className='navlink'>Home</NavLink> 
                 </li>
                 <li className="nav-item">
                   <NavLink to='/about' className='navlink'>About</NavLink>
                 </li>
+                
                 <li className="nav-item dropdown">
-                  <NavLink className="navlink dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Profile
-                  </NavLink>
-                  <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><NavLink to='/admin' className='navlink text-dark p-3'>Admin</NavLink></li>
-                    <li><hr className="dropdown-divider" /></li>
-                    <li><NavLink to='/AdminDashboard' className='navlink text-dark p-3'>Student</NavLink></li>
-                  </ul>
-                </li>
+                <NavLink  className="nav-link dropdown-toggle text-light" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profile</NavLink>                      
+
+                  <ul className="dropdown-menu bg-dark">
+
+                    {/* Admin Submenu */}
+                    <li className="dropdown-submenu dropend">
+                       <NavLink  className="nav-link text-light" to="/login" role="button"  aria-expanded="false">Admin</NavLink>                      
+                         {/* <ul className="dropdown-menu bg-dark">
+                            <li><NavLink className="dropdown-item text-light" to="/admin/login"> Login</NavLink></li>
+                           <li><hr className="dropdown-divider" /></li>
+                           <li><NavLink className="dropdown-item text-light" to="/admin/register">Register</NavLink></li>
+                          </ul> */}
+                   </li>
+
+                   <li><hr className="dropdown-divider" /></li>
+
+                    {/* Student Submenu */}
+                    <li className="dropdown-submenu dropend">
+                    <NavLink  className="nav-link dropdown-toggle text-light" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Student</NavLink>                      
+                    <ul className="dropdown-menu bg-dark">
+                         <li><NavLink className="dropdown-item text-light" to="/login">Login</NavLink></li>
+                         <li><hr className="dropdown-divider" /></li>
+                         <li><NavLink className="dropdown-item text-light" to="/reg">Register</NavLink></li>
+                      </ul>
+                    </li>
+
+                 </ul>
+              </li>
+
               </ul>
             </div>
           </div>
