@@ -34,6 +34,48 @@ function ForgotPassword() {
   };
 
   return (
+    <div class="container text-center w-50 mt-5 p-5 shadow-lg bg-secondary bg-opacity-50" style={{ padding: "20px" }}>
+      <h2 class="text-center text-danger">Forgot Password</h2>
+      <form onSubmit={handleSubmit} style={{padding:"10px"}}>
+    
+        <div className="form-floating mt-3" style={{marginLeft:"80px"}}>
+            <input  type="text"
+                        className="form-control w-75 shadow-lg" 
+                        id="username"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required 
+                    />
+                    <label htmlFor="username">Username</label>
+                </div>
+        
+        <br/>
+        <div className="form-floating mt-3" style={{marginLeft:"80px"}}>
+            <input  type="text"
+                        className="form-control w-75 shadow-lg"
+                        id="New Password"
+                        value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+                    />
+                    <label htmlFor="New Password">New Password</label>
+                </div>
+        
+        <br/>
+      
+        <div className="form-floating mt-3" style={{marginLeft:"80px"}}>
+            <input  type="text"
+                        className="form-control w-75 shadow-lg"
+                        id="Confirm Password"
+                        value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+                    />
+                    <label htmlFor="Confirm Password">Confirm Password</label>
+                </div>
+        
+        <br/>
+        <button type="submit" class="btn btn-outline-danger">Update Password</button
     <div className="container text-center w-50 mt-5 p-5 shadow-lg">
       <h2 className="text-center text-warning">Forgot Password</h2>
       {message && <p style={{ color: message.includes("❌") ? "red" : "green" }}>{message}</p>}
