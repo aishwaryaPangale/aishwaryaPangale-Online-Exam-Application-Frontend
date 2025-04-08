@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -12,7 +13,7 @@ let About = () => {
   return (
     <>
       <div className="main-Home">
-        <nav className="navbar navbar-expand-lg navbar-dark static-top shadow p-3 rounded sticky-top">
+      <nav className="navbar navbar-expand-lg navbar-dark static-top shadow p-3 rounded sticky-top">
           <div className="container">
             <a className="navbar-brand" href="#">
               <img src="src/Images/download-removebg-preview.png" alt="..." height="60" />
@@ -22,23 +23,44 @@ let About = () => {
             </button>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav ms-auto">
-                <li className="nav-item"> 
-                  <a className="nav-link" aria-current="page" href="#" onClick={() => navigate("/")}>Home</a>
+                <li className="nav-item">
+                  {/* <a className="nav-link" aria-current="page" href="#" >Home</a> */}
+                  <NavLink to='/' className='navlink'>Home</NavLink> 
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="">About</a>
+                  <NavLink to='/' className='navlink'>About</NavLink>
                 </li>
+                
                 <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Course
-                  </a>
-                  <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a className="dropdown-item text-dark" href="#">C</a></li>
-                    <li><a className="dropdown-item text-dark" href="#">Java</a></li>
-                    <li><hr className="dropdown-divider" /></li>
-                    <li><a className="dropdown-item text-dark" href="#">Aptitude</a></li>
-                  </ul>
-                </li>
+                   <a className="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profile</a>
+
+                  <ul className="dropdown-menu bg-dark">
+
+                    {/* Admin Submenu */}
+                    <li className="dropdown-submenu dropend">
+                      <a className="dropdown-item dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                      {/* <ul className="dropdown-menu bg-dark">
+                            <li><NavLink className="dropdown-item text-light" to="/admin/login"> Login</NavLink></li>
+                           <li><hr className="dropdown-divider" /></li>
+                           <li><NavLink className="dropdown-item text-light" to="/admin/register">Register</NavLink></li>
+                          </ul> */}
+                   </li>
+
+                   <li><hr className="dropdown-divider" /></li>
+
+                    {/* Student Submenu */}
+                    <li className="dropdown-submenu dropend">
+                      <a className="dropdown-item dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Student</a>
+                      <ul className="dropdown-menu bg-dark">
+                         <li><NavLink className="dropdown-item text-light" to="/login">Login</NavLink></li>
+                         <li><hr className="dropdown-divider" /></li>
+                         <li><NavLink className="dropdown-item text-light" to="/reg">Register</NavLink></li>
+                      </ul>
+                    </li>
+
+                 </ul>
+              </li>
+
               </ul>
             </div>
           </div>
