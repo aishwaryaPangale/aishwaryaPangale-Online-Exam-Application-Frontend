@@ -11,6 +11,7 @@ import AddCourse from "./AdminDashBoard/AddCourse";
 import ForgotPassword from "./Component/ForgotPassword";
 import AdminLogin from "./AdminDashBoard/AdminLogin"
 import Navbar from "./Component/Navbar";
+import UpdateCourse from "./AdminDashBoard/UpdateCourse";
 
 
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/admin" element={<AdminDashboard/>}/>
         <Route path="/addcourse" element={<><AdminDashboard /><AddCourse /></>} />
         <Route path="/viewcourses" element={<><AdminDashboard /><ViewCourse /></>} />
+        <Route path="/UpdateCourse/:id" element={<><AdminDashboard/><UpdateCourse/></>}/>
 
 
 
