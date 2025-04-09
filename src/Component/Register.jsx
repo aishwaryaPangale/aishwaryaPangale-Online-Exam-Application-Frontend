@@ -117,7 +117,9 @@ const Register = () => {
                 <select className="form-select" name="course" value={formData.course} onChange={handleChange} required>
                   <option value="">Select Course</option>
                   <option value="C">C</option>
+                  <option value="Cpp">C++</option>
                   <option value="Java">Java</option>
+                  <option value="Python">Python</option>
                   <option value="Aptitude">Aptitude</option>
                 </select>
                 <label>Course</label>

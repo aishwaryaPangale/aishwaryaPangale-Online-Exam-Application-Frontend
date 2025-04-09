@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { IoMdCloseCircle } from "react-icons/io";
 
 const AddCourse = () => {
   const [course, setCourse] = useState({
@@ -29,21 +30,33 @@ const AddCourse = () => {
           courseDuration: "",
           courseContent: ""
         });
-        setMessage("✅ Course Add Successfully...");
+        setMessage("✅ Course Add Successfully!");
+        setTimeout(() => {
+          setMessage('');
+        }, 2000);
       })
       .catch(() => {
-       
-        setMessageType("❌ Something went wrong...");
+
+        setMessageType("❌ Failed to update course. Please try again.");
+        setTimeout(() => {
+          setMessage('');
+        }, 2000);
       });
   };
 
   return (
-    
-    <div className="text-center shadow-lg mt-3 p-4 rounded position-absolute start-50 top-50 translate-middle" style={{ width: "700px", margin: "auto" }}>
-       {message && <p style={{ color: message.includes("❌") ? "red" : "green" }}>{message}</p>}
-      <h1 className="text-success mb-4">Admin Dashboard - Add Course</h1>
 
-     
+    <div className="text-center shadow-lg mt-3 p-4 rounded position-absolute start-50 top-50 translate-middle" style={{ width: "700px",marginLeft:"100px" }}>
+      <IoMdCloseCircle
+        size={28}
+        className="position-absolute"
+        style={{ top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
+        onClick={() => navigate("/admin")}
+      />
+      {message && <p style={{ color: message.includes("❌") ? "red" : "green" }}>{message}</p>}
+      <h1 className="text-danger mb-4">Add Course</h1>
+
+
 
       <form onSubmit={handleSubmit}>
 

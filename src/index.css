@@ -228,10 +228,94 @@ section .container img{
   
 }
 /* Admin DashBoard */
+/* .dashboard-container {
+  display: flex;
+   height: calc(100vh - 56px); minus header height 
+   overflow: hidden; 
+  height: auto;
+}
+.admin-dashboard-container {
+  height: 100vh;
+   overflow: hidden; 
+}
+.sidebar {
+  height: 100%;
+  width: 250px;
+  overflow-y: auto;
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar.hidden {
+  width: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.content-area {
+  flex-grow: 1;
+  overflow-y: auto;
+  background-color: #fff;
+  padding: 20px;
+  height: 100%;
+}
+
 .admin-container {
   height: 100vh;
   display: flex;
   flex-direction: column;
+} */
+/* AdminDashboard.css */
+
+.admin-dashboard-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-header {
+  background-color: #343a40;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #f1f3f5;
+  padding: 1rem;
+  overflow-y: auto;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .nav-link {
+  color: #333;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #e2e6ea;
+  border-radius: 0.25rem;
+}
+
+.sidebar img {
+  border-radius: 50%;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  overflow-y: auto;
+}
+
+.dropdown-toggle-icon {
+  transition: transform 0.2s ease-in-out;
+}
+
+.dropdown-open .dropdown-toggle-icon {
+  transform: rotate(180deg);
 }
 
 .admin-navbar {
@@ -346,4 +430,31 @@ section .container img{
 .addCourse{
   width: 50%;
   margin:0px 0px 0px 200px;
+}
+ /* Action Buttons */
+ .view-category-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin: 0 5px;
+  padding: 6px;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+.view-category-edit-btn {
+  color: green;
+}
+
+.view-category-edit-btn:hover {
+  background-color: #e7f0ff;
+}
+
+.view-category-delete-btn {
+  color: #ff3c00;
+}
+
+.view-category-delete-btn:hover {
+  background-color: #ffe7e7;
 }
