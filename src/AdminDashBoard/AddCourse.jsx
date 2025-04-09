@@ -9,21 +9,42 @@ const AddCourse = () => {
     courseContent: ""
   });
 
+  const [message, setMessage] = useState(""); // Message state
+  const [messageType, setMessageType] = useState(""); // success or error
+
   const handleChange = (e) => {
     setCourse({ ...course, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevents page reload
+    e.preventDefault();
 
-    axios.post("http://localhost:8080/api/courses/add", course)
-      .then(res => alert(res.data))
-      .catch(err => alert("Error adding course"));
+    axios.post("http://localhost:8081/api/courses/add", course)
+      .then(res => {
+        setMessage(res.data);
+        setMessageType("success");
+        setCourse({
+          courseName: "",
+          courseType: "",
+          courseDuration: "",
+          courseContent: ""
+        });
+        setMessage("✅ Course Add Successfully...");
+      })
+      .catch(() => {
+       
+        setMessageType("❌ Something went wrong...");
+      });
   };
 
   return (
-    <div className="content text-center shadow-lg mt-5 p-4 rounded" style={{ width: "700px", margin: "auto" }}>
+    
+    <div className="text-center shadow-lg mt-3 p-4 rounded position-absolute start-50 top-50 translate-middle" style={{ width: "700px", margin: "auto" }}>
+       {message && <p style={{ color: message.includes("❌") ? "red" : "green" }}>{message}</p>}
       <h1 className="text-success mb-4">Admin Dashboard - Add Course</h1>
+
+     
+
       <form onSubmit={handleSubmit}>
 
         <div className="form-floating mb-3">
@@ -33,6 +54,7 @@ const AddCourse = () => {
             className="form-control"
             id="courseName"
             placeholder="Course Name"
+            value={course.courseName}
             onChange={handleChange}
             required
           />
@@ -44,6 +66,7 @@ const AddCourse = () => {
             name="courseType"
             className="form-select"
             id="courseType"
+            value={course.courseType}
             onChange={handleChange}
             required
           >
@@ -61,6 +84,7 @@ const AddCourse = () => {
             className="form-control"
             id="courseDuration"
             placeholder="Duration"
+            value={course.courseDuration}
             onChange={handleChange}
             required
           />
@@ -74,6 +98,7 @@ const AddCourse = () => {
             className="form-control"
             id="courseContent"
             placeholder="Course Content"
+            value={course.courseContent}
             onChange={handleChange}
             required
           />

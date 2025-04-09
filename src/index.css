@@ -19,6 +19,13 @@ nav{
     #12c2e9,#c471ed,#f64f59
   );
 }
+.dropdown:hover > .dropdown-menu,
+.dropdown-menu > .dropdown-item,
+.dropend:hover > .dropdown-menu {
+  display: block;
+  margin-top: 0.125em;
+  margin-left: 0.125em;
+}
 .reg{
   width: 700px;
   margin-left: 40px;

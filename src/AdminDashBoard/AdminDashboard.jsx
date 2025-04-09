@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import {
   FaBook, FaUserGraduate, FaClipboardList,
   FaSignOutAlt, FaChartBar, FaHome, FaBars
@@ -15,6 +15,7 @@ const AdminDashboard = () => {
   });
 
   const [showSidebar, setShowSidebar] = useState(false);
+  const location = useLocation(); // 👈 Add this line
 
   const toggleDropdown = (section) => {
     setDropdowns((prev) => ({
@@ -24,7 +25,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="container-fluid p-0">
+    <div className="container-fluid p-0 position-relative">
       {/* Header */}
       <header className="bg-dark text-white d-flex justify-content-between align-items-center px-4 py-2 shadow">
         <div className="d-flex align-items-center">
@@ -141,10 +142,14 @@ const AdminDashboard = () => {
 
         {/* Content Area */}
         <main className="col-md-9 col-lg-10 p-4">
-          <div className="text-center">
-            <h2>Welcome to Admin Dashboard</h2>
-            <p className="text-muted">Select an option from the sidebar to continue.</p>
-          </div>
+          {location.pathname === "/admin" ? (
+            <div className="text-center">
+              <h2>Welcome to Admin Dashboard</h2>
+              <p className="text-muted">Select an option from the sidebar to continue.</p>
+            </div>
+          ) : (
+            <Outlet />
+          )}
         </main>
       </div>
     </div>
