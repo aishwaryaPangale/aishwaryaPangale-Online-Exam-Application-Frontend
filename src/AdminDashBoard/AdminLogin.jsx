@@ -77,7 +77,7 @@ const AdminLogin = () => {
             name="username"
             value={formData.username}
             onChange={handleChange}
-            className=" px-3 py-2  bg-transparent form-control w-50 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className=" px-3 py-2  bg-transparent form-control w-50 border border-gray-300 rounded-xl text-light focus:outline-none focus:ring-2 focus:ring-blue-400"
             required
           />
         </div>
@@ -90,7 +90,7 @@ const AdminLogin = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            className=" px-3 py-2  bg-transparent border border-gray-300  form-control w-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className=" px-3 py-2  bg-transparent border text-light border-gray-300  form-control w-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
             required
           />
         </div>
