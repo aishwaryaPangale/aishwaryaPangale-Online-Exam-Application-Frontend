@@ -16,7 +16,8 @@ const Register = () => {
     birthdate: "",
     gender: "",
     username: "",
-    password: ""
+    password: "",
+    batch:""
   });
 
   const [message, setMessage] = useState("");
@@ -62,7 +63,7 @@ const Register = () => {
           onClick={() => navigate(-1)}
         />
         <h2 className="text-center text-warning mb-3">Register</h2>
-        {message && <p style={{ color: message.includes("❌") ? "red" : "green" }}>{message}</p>}
+        {message && <p style={{ color: message.includes("❌") ? "red" : "green"  ,backgroundColor:"white",width:"200px"}}>{message}</p>}
 
         <form onSubmit={handleSubmit} class="reg">
           <div className="row g-3">
@@ -107,6 +108,12 @@ const Register = () => {
 
             <div className="col-md-6">
               <div className="form-floating">
+                <input type="text" className="form-control" name="address" value={formData.address} onChange={handleChange} required />
+                <label>Address</label>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="form-floating">
                 <select className="form-select" name="course" value={formData.course} onChange={handleChange} required>
                   <option value="">Select Course</option>
                   <option value="C">C</option>
@@ -117,13 +124,13 @@ const Register = () => {
               </div>
             </div>
 
+           
             <div className="col-md-6">
               <div className="form-floating">
-                <input type="text" className="form-control" name="address" value={formData.address} onChange={handleChange} required />
-                <label>Address</label>
+                <input type="date" className="form-control" name="batch" value={formData.batch} onChange={handleChange} required />
+                <label>Batch</label>
               </div>
             </div>
-
             <div className="col-md-6">
               <div className="form-floating">
                 <input type="text" className="form-control" name="username" value={formData.username} onChange={handleChange} required />
