@@ -78,7 +78,8 @@ const Login = () => {
 
     return (
         <div className="Register">
-            <div className="container shadow p-5 position-relative" style={{ width: "400px", height: "auto" }}>
+             
+            <div className="container shadow p-3 position-relative" style={{ width: "400px", height: "auto" }}>
                 <IoMdCloseCircle
                     size={28}
                     className="position-absolute"
@@ -88,7 +89,7 @@ const Login = () => {
                 <h2 className="text-warning text-center">Login</h2>
 
                 {message && (
-                    <p style={{ color: message.includes("❌") ? "red" : "green" }}>
+                    <p style={{ color: message.includes("❌") ? "red" : "green" ,backgroundColor:"white",width:"200px"}}>
                         {message}
                     </p>
                 )}
@@ -169,7 +170,7 @@ const Login = () => {
 
                         {countdown > 0 && (
                             <div className="text-end mt-2" style={{ fontSize: "14px" }}>
-                                <h1 class="text-light">⏳ Resend in: {formatTime(countdown)}</h1>
+                                <h5 class="text-light">⏳{formatTime(countdown)}</h5>
                             </div>
                         )}
 

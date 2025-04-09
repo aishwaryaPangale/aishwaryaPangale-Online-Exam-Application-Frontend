@@ -36,6 +36,7 @@ const ForgotPassword = () => {
   return (
     <div className="container text-center w-50 mt-5 p-5 shadow-lg bg-secondary bg-opacity-50">
       <h2 className="text-center text-warning">Forgot Password</h2>
+      {/* Print Message */}
       {message && <p style={{ color: message.includes("❌") ? "red" : "green" }}>{message}</p>}
 
       <form onSubmit={handleSubmit}>
