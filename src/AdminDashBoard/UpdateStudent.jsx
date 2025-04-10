@@ -46,7 +46,7 @@ const UpdateStudent = () => {
   };
 
   return (
-    <div className="container shadow p-4 bg-transparent position-absolute start-50 top-50 translate-middle" style={{ maxWidth: "800px", marginTop: "20px" }}>
+    <div className="container shadow p-4 bg-transparent position-absolute start-50 top-50 translate-middle" style={{ width:"800px" ,marginTop:"20px",marginLeft:"100px"}}>
       <IoMdCloseCircle
         size={28}
         className="position-absolute"

@@ -55,7 +55,7 @@ const AddCourse = () => {
         onClick={() => navigate("/admin")}
       />
       {message && <p style={{ color: message.includes("❌") ? "red" : "green" }}>{message}</p>}
-      <h1 className="text-danger mb-4">Add Course</h1>
+      <h1 className="text-danger mb-4 display-7 text-danger fw-bold fade-in-up glow-text animate__animated animate__rotateIn">Add Course</h1>
 
 
 
@@ -119,7 +119,7 @@ const AddCourse = () => {
           <label htmlFor="courseContent">Course Content</label>
         </div>
 
-        <button type="submit" className="btn btn-outline-success w-75">Add Course</button>
+        <button type="submit" className="btn btn-outline-danger shadow-sm mt-4">Add Course</button>
       </form>
     </div>
   );
