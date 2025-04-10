@@ -48,7 +48,7 @@ const UpdateCourse = () => {
                 size={28}
                 className="position-absolute"
                 style={{ top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
-                onClick={() => navigate("/admin")}
+                onClick={() => navigate(-1)}
             />
             <h1 className="text-danger mb-4 display-7 text-danger fw-bold fade-in-up glow-text animate__animated animate__rotateIn">Update Course</h1>
             <form onSubmit={handleSubmit}>
