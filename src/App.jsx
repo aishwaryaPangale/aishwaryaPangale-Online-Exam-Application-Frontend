@@ -17,6 +17,8 @@ import ViewStudent from "./AdminDashBoard/ViewStudents";
 import UpdateStudent from "./AdminDashBoard/UpdateStudent";
 import AddTest from "./AdminDashBoard/AddTest";
 import ViewTest from "./AdminDashBoard/ViewTest";
+import CreatePaperSet from "./AdminDashBoard/CreatePaperSet";
+import AddQuestion from "./AdminDashBoard/AddQuestion";
 
 
 
@@ -42,6 +44,8 @@ function App() {
         <Route path="/updatestudent/:id" element={<><AdminDashboard/><UpdateStudent/></>}/>
         <Route path="/addtest" element={<><AdminDashboard/><AddTest/></>}/>
         <Route path="/viewtests" element={<><AdminDashboard/><ViewTest/></>}/>
+        <Route path="/createpaperset" element={<><AdminDashboard/><CreatePaperSet/></>}/>
+        <Route path="/addquestion" element={<><AdminDashboard/><AddQuestion/></>}/>
 
 
 

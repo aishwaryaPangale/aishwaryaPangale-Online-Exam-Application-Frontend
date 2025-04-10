@@ -1,62 +1,56 @@
-import React, { useState } from "react";
-import axios from "axios";
-import QuestionForm from "./QuestionForm";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { IoMdCloseCircle } from "react-icons/io";
 
-function AddQuestion({ paperSetId }) {
-  const [type, setType] = useState("MCQ");
-  const [questionText, setQuestionText] = useState("");
-  const [options, setOptions] = useState(["", "", "", ""]);
-  const [correctAnswer, setCorrectAnswer] = useState("");
-  const [message, setMessage] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const payload = {
-      paperSetId,
-      type,
-      questionText,
-      correctAnswer,
-      ...(type === "MCQ" && { options })
+const AddQuestion = () => {
+    const [form, setForm] = useState({
+        question: '',
+        optionA: '',
+        optionB: '',
+        optionC: '',
+        optionD: '',
+        correctAnswer: ''
+    });
+
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    try {
-      await axios.post("http://localhost:8081/api/questions", payload);
-      setMessage("Question added successfully!");
-      setQuestionText("");
-      setCorrectAnswer("");
-      setOptions(["", "", "", ""]);
-    } catch (error) {
-      setMessage("Error adding question.");
-    }
-  };
+    const handleSubmit = async () => {
+        await axios.post('http://localhost:8081/api/questions/add', form);
+        alert("Question added successfully!");
+        setForm({ question: '', optionA: '', optionB: '', optionC: '', optionD: '', correctAnswer: '' });
+    };
 
-  return (
-    <div className="container mt-4 p-4 bg-light rounded shadow w-75">
-      <h4>Add Question</h4>
+    return (
+        <div className="container mt-4 shadow p-4 bg-transparent position-absolute start-50 top-50 translate-middle" style={{width:"800px" ,marginTop:"20px",marginLeft:"100px"}}>
 
-      <form onSubmit={handleSubmit}>
-        <label>Question Type</label>
-        <select className="form-select mb-3" value={type} onChange={(e) => setType(e.target.value)}>
-          <option value="MCQ">Multiple Choice</option>
-          <option value="SHORT_ANSWER">Short Answer</option>
-          <option value="TRUE_FALSE">True/False</option>
-        </select>
+            <IoMdCloseCircle
+                size={28}
+                className="position-absolute"
+                style={{ top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
+                onClick={() => navigate(-1)}
+           />
 
-        <QuestionForm
-          type={type}
-          questionText={questionText}
-          setQuestionText={setQuestionText}
-          options={options}
-          setOptions={setOptions}
-          correctAnswer={correctAnswer}
-          setCorrectAnswer={setCorrectAnswer}
-        />
-
-        <button type="submit" className="btn btn-success w-100">Add Question</button>
-        {message && <div className="mt-3">{message}</div>}
-      </form>
-    </div>
-  );
-}
+            <h3 className=" text-center text-danger mb-3 display-7 text-danger fw-bold fade-in-up glow-text animate__animated animate__rotateIn">Add Question</h3>
+            <input type="text" name="question" className="form-control mb-2" placeholder="Enter Question" value={form.question} onChange={handleChange} />
+            <input type="text" name="optionA" className="form-control mb-2" placeholder="Option A" value={form.optionA} onChange={handleChange} />
+            <input type="text" name="optionB" className="form-control mb-2" placeholder="Option B" value={form.optionB} onChange={handleChange} />
+            <input type="text" name="optionC" className="form-control mb-2" placeholder="Option C" value={form.optionC} onChange={handleChange} />
+            <input type="text" name="optionD" className="form-control mb-2" placeholder="Option D" value={form.optionD} onChange={handleChange} />
+            <select name="correctAnswer" className="form-control mb-3" value={form.correctAnswer} onChange={handleChange}>
+                <option value="">Select Correct Answer</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+            </select>
+            <div className="text-center">
+            <button className="btn btn-outline-danger shadow-sm mt-4 " onClick={handleSubmit}>Add Question</button>
+            </div>
+        </div>
+    );
+};
 
 export default AddQuestion;

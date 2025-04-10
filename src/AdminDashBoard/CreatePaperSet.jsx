@@ -1,46 +1,97 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { IoMdCloseCircle } from "react-icons/io";
 
-function CreatePaperSet({ onCreated }) {
-  const [subject, setSubject] = useState("Java");
-  const [paperName, setPaperName] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const paperSet = { subject, paperName };
-    try {
-      const response = await axios.post("http://localhost:8081/api/paperset", paperSet);
-      onCreated(response.data.id); // Call parent with new paperSetId
-    } catch (error) {
-      alert("Error creating paper set");
-    }
-  };
-
-  return (
-    <div className="container mt-4 p-4 shadow bg-light w-50 rounded">
-      <h4>Create Paper Set</h4>
-      <form onSubmit={handleSubmit}>
-        <label>Subject</label>
-        <select className="form-select mb-3" value={subject} onChange={(e) => setSubject(e.target.value)}>
-          <option value="C++">C++</option>
-          <option value="Java">Java</option>
-          <option value="Python">Python</option>
-          <option value="C++">C++</option>
-        </select>
-
-        <label>Paper Name</label>
-        <input
-          type="text"
-          className="form-control mb-3"
-          value={paperName}
-          onChange={(e) => setPaperName(e.target.value)}
-          required
+const CreatePaperSet = () => {
+    const [tests, setTests] = useState([]);
+    const [questions, setQuestions] = useState([]);
+    const [selectedQuestions, setSelectedQuestions] = useState([]);
+    const [selectedTestId, setSelectedTestId] = useState("");
+  
+    // Fetch all tests
+    useEffect(() => {
+      axios.get('http://localhost:8081/api/tests/all')
+        .then(res => setTests(res.data))
+        .catch(err => console.error(err));
+    }, []);
+  
+    // Fetch all questions
+    useEffect(() => {
+      axios.get('http://localhost:8081/api/questions/all')
+        .then(res => setQuestions(res.data))
+        .catch(err => console.error(err));
+    }, []);
+  
+    const handleCheckboxChange = (id) => {
+      setSelectedQuestions((prev) =>
+        prev.includes(id) ? prev.filter((q) => q !== id) : [...prev, id]
+      );
+    };
+  
+    const handleSubmit = async () => {
+      if (!selectedTestId || selectedQuestions.length === 0) {
+        alert("Please select a test and at least one question.");
+        return;
+      }
+  
+      const payload = {
+        testId: selectedTestId,
+        questionIds: selectedQuestions
+      };
+  
+      try {
+        await axios.post("http://localhost:8081/api/paperset/assignQuestions", payload);
+        alert("Questions assigned to test successfully.");
+        setSelectedQuestions([]);
+        setSelectedTestId("");
+      } catch (err) {
+        alert("Failed to assign questions.");
+      }
+    };
+  
+    return (
+      <div className="container mt-4 shadow p-4 bg-light rounded shadow p-4 bg-transparent position-absolute start-50 top-50 translate-middle" style={{ width: "800px",marginLeft:"100px" }}>
+        <IoMdCloseCircle
+            size={28}
+            className="position-absolute"
+            style={{ top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
+            onClick={() => navigate(-1)}
         />
-
-        <button type="submit" className="btn btn-primary w-100">Create Paper Set</button>
-      </form>
-    </div>
-  );
-}
+        <h3 className="text-center text-danger mb-3 display-7 text-danger fw-bold fade-in-up glow-text animate__animated animate__rotateIn">Set Paper</h3>
+  
+        <div className="form-group mb-3">
+          <label>Select Test</label>
+          <select className="form-select" value={selectedTestId} onChange={(e) => setSelectedTestId(e.target.value)}>
+            <option value="">-- Choose a Test --</option>
+            {tests.map((test) => (
+              <option key={test.id} value={test.id}>
+                {test.subject} | {test.batch} | {test.date} ({test.mode})
+              </option>
+            ))}
+          </select>
+        </div>
+  
+        <h5 className="mt-4">Select Questions</h5>
+        <div className="mb-3" style={{ maxHeight: "300px", overflowY: "scroll" }}>
+          {questions.map((q) => (
+            <div key={q.id} className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                checked={selectedQuestions.includes(q.id)}
+                onChange={() => handleCheckboxChange(q.id)}
+              />
+              <label className="form-check-label">{q.question}</label>
+            </div>
+          ))}
+        </div>
+        <div className="text-center">
+        <button className="btn btn-outline-danger shadow-sm mt-4" onClick={handleSubmit}>Assign Questions</button>
+        </div>
+      </div>
+    );
+  };
+  
 
 export default CreatePaperSet;
