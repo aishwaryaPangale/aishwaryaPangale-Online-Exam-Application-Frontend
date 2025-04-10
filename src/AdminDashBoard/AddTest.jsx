@@ -23,6 +23,9 @@ const AddTest = () => {
         e.preventDefault();
         await axios.post('http://localhost:8081/api/tests/add', test);
         setMessage("✅ Test added successfully");
+        setTimeout(() => {
+            setMessage('');
+          }, 2000);
         setTest({ batch: '', subject: 'C', date: '', time: '', mode: 'Offline' });
     };
 
@@ -62,6 +65,7 @@ const AddTest = () => {
                         onChange={handleChange}
                         required
                     >
+                         <option value="">Select Course</option>
                         <option value="C">C</option>
                         <option value="Cpp">Cpp</option>
                         <option value="Java">Java</option>
