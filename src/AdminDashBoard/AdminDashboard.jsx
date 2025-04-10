@@ -61,7 +61,7 @@ const AdminDashboard = () => {
 
           <ul className="nav flex-column">
             <li className="nav-item mb-2">
-              <NavLink to="/" className="nav-link text-dark"><FaHome className="me-2" /> Home</NavLink>
+              <NavLink to="/admin" className="nav-link text-dark"><FaHome className="me-2" /> Home</NavLink>
             </li>
 
             {/* Course */}
@@ -102,6 +102,9 @@ const AdminDashboard = () => {
                 <ul className="nav flex-column ms-3" style={{ fontSize: "0.85em" }}>
                   <li><NavLink to="/addtest" className="nav-link">Add Test</NavLink></li>
                   <li><NavLink to="/viewtests" className="nav-link">View Tests</NavLink></li>
+                  <li><NavLink to="/addquestion" className="nav-link    fs-6 ">Add Question</NavLink></li>
+                  <li><NavLink to="/createpaperset" className="nav-link">Paper set</NavLink></li>
+
                 </ul>
               )}
             </li>
@@ -113,7 +116,7 @@ const AdminDashboard = () => {
 
             {/* Logout */}
             <li className="nav-item mt-2">
-              <NavLink to="/logout" className="nav-link text-danger"><FaSignOutAlt className="me-2" /> Logout</NavLink>
+              <NavLink to="/" className="nav-link text-danger"><FaSignOutAlt className="me-2" /> Logout</NavLink>
             </li>
           </ul>
         </nav>
