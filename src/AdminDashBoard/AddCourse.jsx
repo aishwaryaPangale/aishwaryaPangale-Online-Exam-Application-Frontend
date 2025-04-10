@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { IoMdCloseCircle } from "react-icons/io";
-
+import { useNavigate } from "react-router-dom";
 const AddCourse = () => {
   const [course, setCourse] = useState({
     courseName: "",
@@ -12,6 +12,7 @@ const AddCourse = () => {
 
   const [message, setMessage] = useState(""); // Message state
   const [messageType, setMessageType] = useState(""); // success or error
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setCourse({ ...course, [e.target.name]: e.target.value });

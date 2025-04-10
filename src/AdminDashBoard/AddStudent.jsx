@@ -52,7 +52,7 @@ const AddStudent = () => {
   };
 
   return (
-      <div className="container shadow p-4 bg-transparent position-absolute start-50 top-50 translate-middle" style={{ maxWidth: "800px" ,marginTop:"20px"}}>
+      <div className="container shadow p-4 bg-transparent position-absolute start-50 top-50 translate-middle" style={{width:"800px" ,marginTop:"20px",marginLeft:"100px"}}>
         <IoMdCloseCircle
           size={28}
           className="position-absolute"
@@ -120,7 +120,9 @@ const AddStudent = () => {
                 <select className="form-select" name="course" value={formData.course} onChange={handleChange} required>
                   <option value="">Select Course</option>
                   <option value="C">C</option>
+                  <option value="Cpp">Cpp</option>
                   <option value="Java">Java</option>
+                  <option value="Python">Python</option>
                   <option value="Aptitude">Aptitude</option>
                 </select>
                 <label>Course</label>
