@@ -50,7 +50,7 @@ const UpdateCourse = () => {
                 style={{ top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
                 onClick={() => navigate("/admin")}
             />
-            <h1 className="text-danger mb-4">Update Course</h1>
+            <h1 className="text-danger mb-4 display-7 text-danger fw-bold fade-in-up glow-text animate__animated animate__rotateIn">Update Course</h1>
             <form onSubmit={handleSubmit}>
 
                 <div className="form-floating mb-3">
@@ -111,7 +111,7 @@ const UpdateCourse = () => {
                     <label htmlFor="courseContent">Course Content</label>
                 </div>
 
-                <button type="submit" className="btn btn-outline-success w-75">Update Course</button>
+                <button type="submit" className="btn btn-outline-danger shadow-sm mt-4">Update Course</button>
             </form>
 
         </div>
