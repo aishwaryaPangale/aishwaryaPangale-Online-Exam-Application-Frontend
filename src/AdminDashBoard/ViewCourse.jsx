@@ -57,10 +57,10 @@ const ViewCourse = () => {
             />
             <h1 className="text-danger text-center mb-4 display-7 text-danger fw-bold fade-in-up glow-text animate__animated animate__rotateIn">View All Courses</h1>
 
-            <div class="text-start">
+            <div class="text-start mb-3">
             <input
                 type="text"
-                className="form-control mb-3 w-50 mx-auto"
+                className="form-control w-50 d-inline border border-danger-subtle"
                 placeholder="Search courses by name..."
                 value={searchTerm}
                 onChange={handleSearch}
