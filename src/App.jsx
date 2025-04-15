@@ -19,6 +19,8 @@ import AddTest from "./AdminDashBoard/AddTest";
 import ViewTest from "./AdminDashBoard/ViewTest";
 import CreatePaperSet from "./AdminDashBoard/CreatePaperSet";
 import AddQuestion from "./AdminDashBoard/AddQuestion";
+import Student from "./StudentDashboard/Student";
+import StudentProfile from "./StudentDashboard/StudentProfile";
 
 
 
@@ -49,6 +51,9 @@ function App() {
 
 
 
+        <Route path="/student" element={<Student />}/>
+    <Route path="/student/profile/:username" element={<StudentProfile />} />
+  
       </Routes>
     </Router>
   );
