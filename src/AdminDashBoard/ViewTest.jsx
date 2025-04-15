@@ -17,6 +17,7 @@ const ViewTest = () => {
     const fetchTests = async () => {
         try {
             const res = await axios.get('http://localhost:8081/api/tests/all');
+            console.log("paper set or not: ",res.data);
             const activeTests = res.data.filter(test => !test.disabled);
             setTests(activeTests);
         } catch (error) {
@@ -94,6 +95,7 @@ const ViewTest = () => {
                         <th>Mode</th>
                         <th>Action</th>
                         <th>Disable</th>
+                        <th>Paper Set</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -116,6 +118,7 @@ const ViewTest = () => {
                                         Disable
                                     </button>
                                 </td>
+                                <td>{test.ispaperSet ? 'Yes' : 'No'}</td>
                             </tr>
                         ))
                     )}
