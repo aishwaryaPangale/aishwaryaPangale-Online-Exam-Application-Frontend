@@ -1,3 +1,4 @@
+// src/components/Login.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
@@ -5,7 +6,6 @@ import { IoMdCloseCircle } from "react-icons/io";
 
 const Login = () => {
     const navigate = useNavigate();
-
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -32,6 +32,7 @@ const Login = () => {
     const sendOtp = async () => {
         if (!email || !username) {
             setMessage("❌ Please enter both username and email!");
+            setTimeout(() => setMessage(""), 2000);
             return;
         }
 
@@ -41,8 +42,10 @@ const Login = () => {
             setOtpSent(true);
             setCountdown(300);
             setMessage(response.data.message || "✅ OTP sent successfully!");
+            setTimeout(() => setMessage(""), 2000);
         } catch (error) {
             setMessage(error.response?.data?.message || "❌ Failed to send OTP!");
+            setTimeout(() => setMessage(""), 2000);
         } finally {
             setLoading(false);
         }
@@ -51,9 +54,10 @@ const Login = () => {
     const verifyOtpAndLogin = async () => {
         if (!username || !email || !password || !otp) {
             setMessage("❌ All fields are required!");
+            setTimeout(() => setMessage(""), 2000);
             return;
         }
-    
+
         try {
             setLoading(true);
             const response = await axios.post("http://localhost:8081/api/auth/verify-otp", {
@@ -62,24 +66,35 @@ const Login = () => {
                 password,
                 otp,
             });
-    
+
+            console.log("Login response:", response.data); // Debug: check structure
+           // ✅ Add this
+            
+           console.log("Login response:", response.data);
+           localStorage.setItem("studentName", response.data.name);
+           localStorage.setItem("username", response.data.username); 
             setMessage(response.data.message || "✅ Login successful!");
+          
+
             setTimeout(() => {
-                navigate("/admin");
+                // navigate(`/student/profile/${username}`);
+                navigate("/student");
+                setMessage("");
             }, 1500);
-    
+
         } catch (error) {
             setMessage(error.response?.data?.message || "❌ Invalid OTP or credentials!");
+            setPassword("");
+            setUsername("");
+            setTimeout(() => setMessage(""), 2000);
         } finally {
             setLoading(false);
         }
     };
-    
 
     return (
         <div className="Register">
-             
-            <div className="container shadow p-3 position-relative" style={{ width: "400px", height: "auto" }}>
+            <div className="container shadow p-3 position-relative" style={{ width: "400px" }}>
                 <IoMdCloseCircle
                     size={28}
                     className="position-absolute"
@@ -89,12 +104,11 @@ const Login = () => {
                 <h2 className="text-warning text-center">Login</h2>
 
                 {message && (
-                    <p style={{ color: message.includes("❌") ? "red" : "green" ,backgroundColor:"white",width:"200px"}}>
+                    <p style={{ color: message.includes("❌") ? "red" : "green", backgroundColor: "white", width: "250px" }}>
                         {message}
                     </p>
                 )}
 
-                {/* Username */}
                 <div className="form-floating mt-3">
                     <input
                         type="text"
@@ -107,7 +121,6 @@ const Login = () => {
                     <label htmlFor="username">Username</label>
                 </div>
 
-                {/* Email */}
                 <div className="form-floating mt-3">
                     <input
                         type="email"
@@ -120,31 +133,22 @@ const Login = () => {
                     <label htmlFor="email">Email</label>
                 </div>
 
-                {/* Forgot Password */}
                 {!otpSent && (
                     <div className="text-end mt-1">
                         <Link to="/forgot-password" className="btn btn-link text-primary p-0" style={{ fontSize: "14px" }}>
-           
                             Forgot Password?
                         </Link>
                     </div>
                 )}
 
-                {/* Send OTP Button */}
                 {!otpSent || countdown <= 0 ? (
-                    <button
-                        onClick={sendOtp}
-                        disabled={loading}
-                        className="btn btn-success w-50 mt-3"
-                    >
+                    <button onClick={sendOtp} disabled={loading} className="btn btn-success w-50 mt-3">
                         {loading ? "Sending OTP..." : "Send OTP"}
                     </button>
                 ) : null}
 
-                {/* Password + OTP + Countdown + Login Button */}
                 {otpSent && (
                     <>
-                        {/* Password */}
                         <div className="form-floating mt-3">
                             <input
                                 type="password"
@@ -156,7 +160,6 @@ const Login = () => {
                             <label htmlFor="password">Password</label>
                         </div>
 
-                        {/* OTP */}
                         <div className="form-floating mt-3">
                             <input
                                 type="text"
@@ -170,7 +173,7 @@ const Login = () => {
 
                         {countdown > 0 && (
                             <div className="text-end mt-2" style={{ fontSize: "14px" }}>
-                                <h5 class="text-light">⏳{formatTime(countdown)}</h5>
+                                <h5 className="text-light">⏳ {formatTime(countdown)}</h5>
                             </div>
                         )}
 
@@ -184,7 +187,6 @@ const Login = () => {
                     </>
                 )}
 
-                {/* Register Button */}
                 <div className="mt-4 text-center">
                     <button className="btn btn-outline-warning" onClick={() => navigate("/reg")}>
                         Register

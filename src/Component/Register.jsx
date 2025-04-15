@@ -17,7 +17,7 @@ const Register = () => {
     gender: "",
     username: "",
     password: "",
-    batch:""
+    batch: ""
   });
 
   const [message, setMessage] = useState("");
@@ -29,29 +29,35 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Sending data to backend:", formData);
-  
+
     try {
       const response = await axios.post("http://localhost:8081/api/register", formData, {
         headers: { "Content-Type": "application/json" }
       });
-  
+
       console.log("Server response:", response.data); // 👈 helpful debug
-  
+
       if (response.data === "Email already exists") {
         setMessage("❌ Email already exists");
+        setTimeout(() => setMessage(""), 2000);
       } else if (response.data === "Registered successfully") {
         setMessage("✅ Registration Successful!");
-        setTimeout(() => navigate("/login"), 1500);
+        localStorage.setItem("studentName", response.data.name);
+        localStorage.setItem("username", response.data.username);
+
+        setTimeout(() => navigate("/login"), setMessage(""), 1500);
       } else {
         setMessage("❌ Unexpected server response.");
+        setTimeout(() => setMessage(""), 2000);
       }
-  
+
     } catch (err) {
       console.error("Registration error:", err);
       setMessage("❌ Error: " + err.message);
+      setTimeout(() => setMessage(""), 2000);
     }
   };
-  
+
 
   return (
     <div className="Register">
@@ -63,7 +69,7 @@ const Register = () => {
           onClick={() => navigate(-1)}
         />
         <h2 className="text-center text-warning mb-3">Register</h2>
-        {message && <p style={{ color: message.includes("❌") ? "red" : "green"  ,backgroundColor:"white",width:"200px"}}>{message}</p>}
+        {message && <p style={{ color: message.includes("❌") ? "red" : "green", backgroundColor: "white", width: "200px" }}>{message}</p>}
 
         <form onSubmit={handleSubmit} class="reg">
           <div className="row g-3">
@@ -126,7 +132,7 @@ const Register = () => {
               </div>
             </div>
 
-           
+
             <div className="col-md-6">
               <div className="form-floating">
                 <input type="date" className="form-control" name="batch" value={formData.batch} onChange={handleChange} required />

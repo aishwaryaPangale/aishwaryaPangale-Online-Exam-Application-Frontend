@@ -38,7 +38,7 @@ const ViewStudent = () => {
       const updated = students.filter((s) => s.id !== id);
       setStudents(updated);
       setMessage("✅ Student deleted successfully");
-      setTimeout(() => setMessage(""), 3000);
+      setTimeout(() => setMessage(""), 2000);
     } catch (error) {
       console.error("Error deleting student", error);
       setMessage("❌ Error deleting student");
