@@ -7,8 +7,16 @@ const StudentProfile = () => {
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  console.log("Username from URL:", username);
+
   useEffect(() => {
     const fetchProfile = async () => {
+      if (!username) {
+        console.warn("No username provided in URL.");
+        setLoading(false);
+        return;
+      }
+
       try {
         const response = await axios.get(`http://localhost:8081/api/register/username/${username}`);
         setStudent(response.data);
@@ -18,11 +26,9 @@ const StudentProfile = () => {
         setLoading(false);
       }
     };
-  
-    if (username) fetchProfile();
-    else setLoading(false);
+
+    fetchProfile();
   }, [username]);
-  
 
   if (loading) return <div className="container mt-5">Loading profile...</div>;
   if (!student) return <div className="container mt-5">No profile data found.</div>;
