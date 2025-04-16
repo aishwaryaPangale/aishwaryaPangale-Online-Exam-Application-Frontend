@@ -48,8 +48,7 @@ const AddTest = () => {
             await axios.post('http://localhost:8081/api/tests/add', test);
             setMessage('✅ Test added successfully');
             setTimeout(() => {
-                setMessage('');
-                navigate('/tests'); // Navigate to the tests list or appropriate page
+                setMessage(''); 
             }, 2000);
         } catch (err) {
             console.error('Error adding test:', err);
@@ -79,11 +78,12 @@ const AddTest = () => {
                     <div className="form-floating">
                         <select className="form-select" name="batchId" value={test.batchId} onChange={handleChange} required>
                             <option value="">Select Batch</option>
-                            {batches.map((batch) => (
-                                <option key={`batch-${batch.id}`} value={batch.id}>
-                                    {batch.batchName}
+                            {batches.map((batch, index) => (
+                                <option key={`batch-${index}`} value={batch.batch_id}>
+                                    {batch.batch_name}
                                 </option>
                             ))}
+
                         </select>
                         <label>Batch</label>
                     </div>
@@ -102,7 +102,6 @@ const AddTest = () => {
                         <label>Course</label>
                     </div>
                 </div>
-
 
                 <div className="form-floating mb-3">
                     <input
@@ -145,8 +144,8 @@ const AddTest = () => {
                     <label htmlFor="mode">Mode</label>
                 </div>
 
-                <button type="submit" className="btn btn-outline-danger shadow-sm" disabled={loading}>
-                    {loading ? 'Adding...' : 'Submit'}
+                <button type="submit" className="btn btn-outline-danger shadow-sm">
+                    Add Test
                 </button>
             </form>
         </div>
