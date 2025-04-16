@@ -101,7 +101,6 @@ const ViewStudent = () => {
       <table className="table table-bordered table-striped table-hover">
         <thead className="table-dark text-center">
           <tr>
-            <th>ID</th>
             <th>Full Name</th>
             <th>Email</th>
             <th>Contact</th>
@@ -114,7 +113,6 @@ const ViewStudent = () => {
           {currentItems.length > 0 ? (
             currentItems.map((student) => (
               <tr key={student.id}>
-                <td>{student.id}</td>
                 <td>{student.name}</td>
                 <td>{student.email}</td>
                 <td>{student.contact}</td>

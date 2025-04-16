@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +21,18 @@ const Register = () => {
   });
 
   const [message, setMessage] = useState("");
+   const [courses, setCourses] = useState([]);
+    const [batches, setBatches] = useState([]);
 
+   useEffect(() => {
+      axios.get("http://localhost:8081/api/courses/all")
+        .then(res => setCourses(res.data))
+        .catch(err => console.error("Error loading courses:", err));
+  
+      axios.get("http://localhost:8081/api/batches/all")
+        .then(res => setBatches(res.data))
+        .catch(err => console.error("Error loading batches:", err));
+    }, []);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -119,26 +130,35 @@ const Register = () => {
               </div>
             </div>
             <div className="col-md-6">
-              <div className="form-floating">
-                <select className="form-select" name="course" value={formData.course} onChange={handleChange} required>
-                  <option value="">Select Course</option>
-                  <option value="C">C</option>
-                  <option value="Cpp">C++</option>
-                  <option value="Java">Java</option>
-                  <option value="Python">Python</option>
-                  <option value="Aptitude">Aptitude</option>
-                </select>
-                <label>Course</label>
-              </div>
+            <div className="form-floating">
+              <select className="form-select" name="course" value={formData.course} onChange={handleChange} required>
+                <option value="">Select Course</option>
+                {courses.map((course) => (
+                  <option key={course.id} value={course.courseName}>
+                    {course.courseName}
+                  </option>
+                ))}
+              </select>
+              <label>Course</label>
             </div>
+          </div>
 
 
-            <div className="col-md-6">
-              <div className="form-floating">
-                <input type="date" className="form-control" name="batch" value={formData.batch} onChange={handleChange} required />
-                <label>Batch</label>
-              </div>
+          <div className="col-md-6">
+            <div className="form-floating">
+              <select className="form-select" name="batch" value={formData.batch} onChange={handleChange} required>
+                <option value="">Select Batch</option>
+                {batches.map((batch) => (
+                  <option key={batch.id} value={batch.batchName}>
+                    {batch.batchName}
+                  </option>
+                ))}
+              </select>
+              <label>Batch</label>
             </div>
+          </div>
+
+
             <div className="col-md-6">
               <div className="form-floating">
                 <input type="text" className="form-control" name="username" value={formData.username} onChange={handleChange} required />
