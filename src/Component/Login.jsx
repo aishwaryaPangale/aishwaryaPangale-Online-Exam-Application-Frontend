@@ -66,15 +66,12 @@ const Login = () => {
                 password,
                 otp,
             });
-
-            console.log("Login response:", response.data); // Debug: check structure
-           // ✅ Add this
             
-           console.log("Login response:", response.data);
            localStorage.setItem("studentName", response.data.name);
            localStorage.setItem("username", response.data.username); 
             setMessage(response.data.message || "✅ Login successful!");
-          
+            console.log("Login response data:", response.data);
+
 
             setTimeout(() => {
                 // navigate(`/student/profile/${username}`);
