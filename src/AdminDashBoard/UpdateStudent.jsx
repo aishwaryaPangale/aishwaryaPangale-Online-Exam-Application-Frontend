@@ -19,6 +19,7 @@ const UpdateStudent = () => {
     password: "",
   });
 
+
   const [message, setMessage] = useState("");
 
   useEffect(() => {
