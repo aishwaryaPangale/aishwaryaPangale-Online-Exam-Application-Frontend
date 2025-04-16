@@ -7,42 +7,52 @@ const ViewTest = () => {
     const [tests, setTests] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const testsPerPage = 5; // Changed to 3 tests per page
+    const testsPerPage = 5;
     const navigate = useNavigate();
 
-    useEffect(() => {
-        fetchTests();
-    }, []);
-
+    // Fetch all tests
     const fetchTests = async () => {
         try {
             const res = await axios.get('http://localhost:8081/api/tests/all');
-            console.log("paper set or not: ",res.data);
-            const activeTests = res.data.filter(test => !test.disabled);
-            setTests(activeTests);
+            console.log("Fetched Tests:", res.data);
+            setTests(res.data); // Store all, handle disable in rendering
         } catch (error) {
             console.error("Error fetching tests:", error);
         }
     };
 
+    useEffect(() => {
+        fetchTests();
+    }, []);
+
+    // Disable a test
     const disableTest = async (id) => {
         try {
-            await axios.put(`http://localhost:8081/api/tests/disable/${id}`);
-            fetchTests();
+            const response = await axios.put(`http://localhost:8081/api/tests/disable/${id}`);
+            console.log("Test disabled:", response.data);
+
+            // Update only the disabled test locally
+            const updated = tests.map(test =>
+                test.id === id ? { ...test, disable: true } : test
+            );
+            setTests(updated);
         } catch (error) {
             console.error("Error disabling test:", error);
         }
     };
 
-    const filteredTests = tests.filter(test =>
-        test.batch.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        test.subject.toLowerCase().includes(searchTerm.toLowerCase())
+    // Search & Pagination without filter() – just render based on conditions
+    const searchedTests = tests.filter(test =>
+        !test.disable && 
+        (test.course_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+         test.batch_name?.toLowerCase().includes(searchTerm.toLowerCase()))
     );
+    
 
+    const totalPages = Math.ceil(searchedTests.length / testsPerPage);
     const indexOfLastTest = currentPage * testsPerPage;
     const indexOfFirstTest = indexOfLastTest - testsPerPage;
-    const currentTests = filteredTests.slice(indexOfFirstTest, indexOfLastTest);
-    const totalPages = Math.ceil(filteredTests.length / testsPerPage);
+    const currentTests = searchedTests.slice(indexOfFirstTest, indexOfLastTest);
 
     const handlePrevPage = () => {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -57,16 +67,13 @@ const ViewTest = () => {
     };
 
     return (
-        <div className="container mt-4 text-center shadow-lg p-4 rounded position-absolute start-50 top-50 translate-middle"
-            style={{ width: "900px", marginLeft: "100px" }}>
-
+        <div className="container text-center shadow-lg p-4 rounded position-absolute start-50 top-50 translate-middle" style={{ width: "900px", marginLeft: "100px" }}>
             <IoMdCloseCircle
                 size={28}
                 className="position-absolute"
                 style={{ top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
                 onClick={() => navigate(-1)}
             />
-
             <h3 className="text-danger mb-4 fw-bold">View Tests</h3>
 
             {/* Search bar */}
@@ -83,47 +90,54 @@ const ViewTest = () => {
                 />
             </div>
 
-            {/* Test Table */}
-            <table className="table table-bordered">
-                <thead className="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Batch</th>
-                        <th>Subject</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Mode</th>
-                        <th>Action</th>
-                        <th>Disable</th>
-                        <th>Paper Set</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentTests.length === 0 ? (
+            {/* Table */}
+            <div className="table-responsive">
+                <table className="table table-bordered">
+                    <thead className="table-dark text-center align-middle">
                         <tr>
-                            <td colSpan="8">No active tests found.</td>
+                            <th>ID</th>
+                            <th>Batch</th>
+                            <th>Subject</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Mode</th>
+                            <th>Action</th>
+                            <th>Disable</th>
+                            <th>Paper Set</th>
                         </tr>
-                    ) : (
-                        currentTests.map((test) => (
-                            <tr key={test.id}>
-                                <td>{test.id}</td>
-                                <td>{test.batch}</td>
-                                <td>{test.subject}</td>
-                                <td>{test.date}</td>
-                                <td>{test.time}</td>
-                                <td>{test.mode}</td>
-                                <td>{test.action ? 'Not Attended' : 'Attended'}</td>
-                                <td>
-                                    <button className="btn btn-danger btn-sm" onClick={() => disableTest(test.id)}>
-                                        Disable
-                                    </button>
-                                </td>
-                                <td>{test.ispaperSet ? 'Yes' : 'No'}</td>
+                    </thead>
+                    <tbody className="text-center align-middle">
+                        {currentTests.length === 0 ? (
+                            <tr>
+                                <td colSpan="9">No active tests found.</td>
                             </tr>
-                        ))
-                    )}
-                </tbody>
-            </table>
+                        ) : (
+                            currentTests.map((test) =>
+                                
+                                    <tr key={test.id}>
+                                        <td>{test.id}</td>
+                                        <td>{test.batch_name}</td>
+                                        <td>{test.course_name}</td>
+                                        <td>{test.date}</td>
+                                        <td>{test.time}</td>
+                                        <td>{test.mode}</td>
+                                        <td>{test.action ? 'Not Attended' : 'Attended'}</td>
+                                        <td>
+                                            <button
+                                                className="btn btn-danger btn-sm"
+                                                onClick={() => disableTest(test.id)}
+                                            >
+                                                Disable
+                                            </button>
+                                        </td>
+                                        <td>{test.ispaperSet ? 'Yes' : 'No'}</td>
+                                    </tr>
+                                )
+                            
+                        )}
+                    </tbody>
+                </table>
+            </div>
 
             {/* Pagination */}
             {totalPages > 1 && (

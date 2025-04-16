@@ -6,6 +6,7 @@ import axios from "axios";
 const UpdateStudent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,11 +22,39 @@ const UpdateStudent = () => {
 
 
   const [message, setMessage] = useState("");
+  const [courses, setCourses] = useState([]);
+  const [batches, setBatches] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8081/api/register/${id}`)
-      .then((res) => setFormData(res.data))
+    axios.get("http://localhost:8081/api/courses/all")
+      .then(res => setCourses(res.data))
+      .catch(err => console.error("Error loading courses:", err));
+
+    axios.get("http://localhost:8081/api/batches/all")
+      .then(res => {
+        console.log("Fetched batches:", res.data); // Debug
+        setBatches(res.data);
+      })
+      .catch(err => console.error("Error loading batches:", err));
+  }, []);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8081/api/register/${id}`)
+      .then((res) => {
+        const data = res.data;
+        setFormData({
+          name: data.name || "",
+          email: data.email || "",
+          contact: data.contact || "",
+          birthdate: data.birthdate || "",
+          gender: data.gender || "",
+          address: data.address || "",
+          course: data.courseName || "",
+          batch: data.batchName || "",
+          username: data.username || "",
+          password: data.password || "",
+        });
+      })
       .catch((err) => console.error("Error loading student", err));
   }, [id]);
 
@@ -47,14 +76,16 @@ const UpdateStudent = () => {
   };
 
   return (
-    <div className="container shadow p-4 bg-transparent position-absolute start-50 top-50 translate-middle" style={{ width:"800px" ,marginTop:"20px",marginLeft:"100px"}}>
+    <div className="container shadow p-4 bg-transparent position-absolute start-50 top-50 translate-middle" style={{ width: "800px", marginTop: "20px", marginLeft: "100px" }}>
       <IoMdCloseCircle
         size={28}
         className="position-absolute"
         style={{ top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
         onClick={() => navigate(-1)}
       />
-      <h2 className="text-center text-primary mb-3 display-7 text-danger fw-bold fade-in-up glow-text animate__animated animate__rotateIn">Update Student Details</h2>
+      <h2 className="text-center text-primary mb-3 display-7 text-danger fw-bold fade-in-up glow-text animate__animated animate__rotateIn">
+        Update Student Details
+      </h2>
 
       {message && (
         <p style={{ color: message.includes("❌") ? "red" : "green", backgroundColor: "white", width: "fit-content", padding: "5px 10px" }}>
@@ -64,6 +95,7 @@ const UpdateStudent = () => {
 
       <form onSubmit={handleSubmit}>
         <div className="row g-3">
+          {/* Name */}
           <div className="col-md-6">
             <div className="form-floating">
               <input type="text" name="name" className="form-control" value={formData.name} onChange={handleChange} required />
@@ -71,6 +103,7 @@ const UpdateStudent = () => {
             </div>
           </div>
 
+          {/* Email */}
           <div className="col-md-6">
             <div className="form-floating">
               <input type="email" name="email" className="form-control" value={formData.email} onChange={handleChange} required />
@@ -78,6 +111,7 @@ const UpdateStudent = () => {
             </div>
           </div>
 
+          {/* Contact */}
           <div className="col-md-6">
             <div className="form-floating">
               <input type="text" name="contact" className="form-control" value={formData.contact} onChange={handleChange} required />
@@ -85,6 +119,7 @@ const UpdateStudent = () => {
             </div>
           </div>
 
+          {/* Birthdate */}
           <div className="col-md-6">
             <div className="form-floating">
               <input type="date" name="birthdate" className="form-control" value={formData.birthdate} onChange={handleChange} required />
@@ -92,6 +127,7 @@ const UpdateStudent = () => {
             </div>
           </div>
 
+          {/* Gender */}
           <div className="col-md-6">
             <div className="form-floating">
               <select className="form-select" name="gender" value={formData.gender} onChange={handleChange} required>
@@ -103,6 +139,7 @@ const UpdateStudent = () => {
             </div>
           </div>
 
+          {/* Address */}
           <div className="col-md-6">
             <div className="form-floating">
               <input type="text" className="form-control" name="address" value={formData.address} onChange={handleChange} required />
@@ -110,25 +147,37 @@ const UpdateStudent = () => {
             </div>
           </div>
 
+          {/* Course Dropdown */}
           <div className="col-md-6">
             <div className="form-floating">
               <select className="form-select" name="course" value={formData.course} onChange={handleChange} required>
                 <option value="">Select Course</option>
-                <option value="C">C</option>
-                <option value="Java">Java</option>
-                <option value="Aptitude">Aptitude</option>
+                {courses.map((course) => (
+                  <option key={course.id} value={course.courseName}>
+                    {course.courseName}
+                  </option>
+                ))}
               </select>
               <label>Course</label>
             </div>
           </div>
 
+          {/* Batch Dropdown */}
           <div className="col-md-6">
             <div className="form-floating">
-              <input type="date" className="form-control" name="batch" value={formData.batch} onChange={handleChange} required />
+              <select className="form-select" name="batch" value={formData.batch} onChange={handleChange} required>
+                <option value="">Select Batch</option>
+                {batches.map((batch, index) => (
+                  <option key={`batch-${index}`} value={batch.batch_name}>
+                    {batch.batch_name}
+                  </option>
+                ))}
+              </select>
               <label>Batch</label>
             </div>
           </div>
 
+          {/* Username */}
           <div className="col-md-6">
             <div className="form-floating">
               <input type="text" className="form-control" name="username" value={formData.username} onChange={handleChange} required />
@@ -136,6 +185,7 @@ const UpdateStudent = () => {
             </div>
           </div>
 
+          {/* Password */}
           <div className="col-md-6">
             <div className="form-floating">
               <input type="password" className="form-control" name="password" value={formData.password} onChange={handleChange} required />
@@ -143,6 +193,7 @@ const UpdateStudent = () => {
             </div>
           </div>
 
+          {/* Submit Button */}
           <div className="col-12 text-center">
             <button type="submit" className="btn btn-outline-danger shadow-sm mt-4">Update Student</button>
           </div>
