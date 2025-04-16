@@ -77,9 +77,29 @@ const AdminDashboard = () => {
                 }}>▼</span>
               </div>
               {activeDropdown === "course" && (
-                <ul className="nav flex-column ms-3 border-start ps-2" style={{fontSize:"0.8em"}}>
+                <ul className="nav flex-column ms-3 border-start ps-2" style={{ fontSize: "0.8em" }}>
                   <li><NavLink to="/addcourse" className="nav-link text-light opacity-75">Add Course</NavLink></li>
                   <li><NavLink to="/viewcourses" className="nav-link text-light opacity-75">View Courses</NavLink></li>
+                </ul>
+              )}
+            </li>
+            {/* Batch */}
+            <li className="nav-item mt-2">
+              <div
+                className="nav-link text-dark fw-semibold d-flex justify-content-between align-items-center"
+                onClick={() => toggleDropdown("batch")}
+                style={{ cursor: "pointer" }}
+              >
+                <span><FaClipboardList className="me-2" /> Batch</span>
+                <span style={{
+                  transform: activeDropdown === "batch" ? "rotate(180deg)" : "rotate(0deg)",
+                  transition: "transform 0.3s"
+                }}>▼</span>
+              </div>
+              {activeDropdown === "batch" && (
+                <ul className="nav flex-column ms-3 border-start ps-2" style={{ fontSize: "0.8em" }}>
+                  <li><NavLink to="/addbatch" className="nav-link text-light opacity-75">Add Batch</NavLink></li>
+                  <li><NavLink to="/viewbatch" className="nav-link text-light opacity-75">View Batch</NavLink></li>
                 </ul>
               )}
             </li>
@@ -98,7 +118,7 @@ const AdminDashboard = () => {
                 }}>▼</span>
               </div>
               {activeDropdown === "student" && (
-                <ul className="nav flex-column ms-3 border-start ps-2" style={{fontSize:"0.8em"}}>
+                <ul className="nav flex-column ms-3 border-start ps-2" style={{ fontSize: "0.8em" }}>
                   <li><NavLink to="/addstudent" className="nav-link text-light opacity-75">Add Student</NavLink></li>
                   <li><NavLink to="/viewstudents" className="nav-link text-light opacity-75">View Students</NavLink></li>
                 </ul>
@@ -119,7 +139,7 @@ const AdminDashboard = () => {
                 }}>▼</span>
               </div>
               {activeDropdown === "test" && (
-                <ul className="nav flex-column ms-3 border-start ps-2" style={{fontSize:"0.8em"}}>
+                <ul className="nav flex-column ms-3 border-start ps-2" style={{ fontSize: "0.8em" }}>
                   <li><NavLink to="/addtest" className="nav-link text-light opacity-75">Add Test</NavLink></li>
                   <li><NavLink to="/viewtests" className="nav-link text-light opacity-75">View Tests</NavLink></li>
                   <li><NavLink to="/addquestion" className="nav-link text-light opacity-75">Add Question</NavLink></li>
