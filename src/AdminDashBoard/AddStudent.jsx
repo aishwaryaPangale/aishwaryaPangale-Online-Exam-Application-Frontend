@@ -217,8 +217,8 @@ const AddStudent = () => {
               >
                 <option value="">Select Batch</option>
                 {batches.map((batch, index) => (
-                  <option key={`batch-${index}`} value={batch.batch_name}>
-                    {batch.batch_name}
+                  <option key={`batch-${index}`} value={batch.batchName}>
+                    {batch.batchName}
                   </option>
                 ))}
               </select>

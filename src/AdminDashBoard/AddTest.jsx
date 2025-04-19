@@ -36,7 +36,9 @@ const AddTest = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+    
+    console.log(test);  // Add this line to check the data being sent
+  
     try {
       await axios.post('http://localhost:8081/api/tests/add', test);
       setMessage('✅ Test added successfully!');
@@ -48,12 +50,14 @@ const AddTest = () => {
         mode: 'Offline',
       });
     } catch (err) {
+      console.error('Error:', err.response.data);  // Log the error response for debugging
       setMessage('❌ Failed to add test. Try again.');
     } finally {
       setLoading(false);
       setTimeout(() => setMessage(''), 2000);
     }
   };
+  
 
   return (
     <div className="container shadow p-4 rounded position-absolute start-50 top-50 translate-middle" style={{ width: '600px' }} >
@@ -73,8 +77,8 @@ const AddTest = () => {
           <select name="batchId" className="form-select" value={test.batchId} onChange={handleChange} required >
             <option value="">Select Batch</option>
             {batches.map((batch, i) => (
-              <option key={i} value={batch.batch_id}>
-                {batch.batch_name}
+              <option key={i} value={batch.id}>
+                {batch.batchName}
               </option>
             ))}
           </select>
