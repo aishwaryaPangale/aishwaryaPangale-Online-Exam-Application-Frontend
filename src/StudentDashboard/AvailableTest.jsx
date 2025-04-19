@@ -1,40 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const AvailableTestList = () => {
-  const [username, setUsername] = useState('');
+const AvailableTest = () => {
   const [tests, setTests] = useState([]);
   const [error, setError] = useState('');
+
+  const username = "sush"; // Replace with actual logged-in username
+
+  useEffect(() => {
+    fetchAvailableTests();
+  }, []);
 
   const fetchAvailableTests = async () => {
     try {
       const response = await axios.get(`http://localhost:8081/api/tests/available?username=${username}`);
-      console.log("Response from backend:", response.data);  // Log the response data
-      setTests(response.data); // Ensure response.data is an array
+      console.log("Response from backend:", response.data);
+      setTests(response.data);
       setError('');
     } catch (err) {
-      console.error("Error fetching tests:", err);  // Log the error
-      setError('Failed to fetch tests. Please check the username or try again later.');
+      console.error("Error fetching tests:", err);
+      setError('Failed to fetch tests. Please try again later.');
       setTests([]);
     }
   };
-  
 
   return (
-    <div className="container mt-5 p-4 bg-white shadow rounded w-75 mx-auto position-absolute start-50 top-50 translate-middle" style={{ maxWidth: "700px" }}>
+    <div className="container mt-5 p-4 bg-white shadow rounded position-absolute start-50 top-50 translate-middle" style={{ maxWidth: "800px", marginLeft: "100px" }}>
       <h2>Available Tests</h2>
-      <div className="mb-3">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Enter Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <button className="btn btn-primary mt-2" onClick={fetchAvailableTests}>
-          Get Available Tests
-        </button>
-      </div>
 
       {error && <div className="alert alert-danger">{error}</div>}
 
@@ -43,20 +35,36 @@ const AvailableTestList = () => {
           <thead>
             <tr>
               <th>Date</th>
-              <th>Batch ID</th>
-              <th>Course ID</th>
+              <th>Batch Name</th>
+              <th>Course Name</th>
               <th>Time</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {tests.map((test) => (
-              <tr key={test.testId}>
-             <td>{test.date}</td>
-                <td>{test.batchId}</td>
-                <td>{test.courseId}</td>
-                <td>{test.time}</td>
-              </tr>
-            ))}
+            {tests.map((test) => {
+              const testDateTime = new Date(`${test.date}T${test.time}`);
+              const currentTime = new Date();
+              const hasStarted = currentTime >= testDateTime;
+
+              return (
+                <tr key={test.testId}>
+                  <td>{test.date}</td>
+                  <td>{test.batchName}</td>
+                  <td>{test.courseName}</td>
+                  <td>{test.time}</td>
+                  <td>
+                    <button
+                      className={`btn ${hasStarted ? 'btn-success' : 'btn-primary'}`}
+                      disabled={!hasStarted}
+                      onClick={() => alert(`Starting test ID: ${test.testId}`)}
+                    >
+                      {hasStarted ? 'Start Test' : 'Not Started'}
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       ) : (
@@ -66,4 +74,4 @@ const AvailableTestList = () => {
   );
 };
 
-export default AvailableTestList;
+export default AvailableTest;

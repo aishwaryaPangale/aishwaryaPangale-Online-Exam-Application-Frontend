@@ -121,15 +121,14 @@ const ViewStudent = () => {
                 <td>
                   {/* <button className="btn btn-sm btn-primary me-2" onClick={() => handleEdit(student.id)}>Edit</button>
                   <button className="btn btn-sm btn-danger" onClick={() => handleDelete(student.id)}>Delete</button> */}
+                   <button
+                      className="view-category-icon-btn view-category-delete-btn"
+                      onClick={() => handleDelete(student.id)}>
+                      <FaTrash/> </button>
                   <button className="view-category-icon-btn view-category-edit-btn" onClick={() => handleEdit(student.id)}>
                       <FaEdit  />
                     </button>
-                    <button
-                      className="view-category-icon-btn view-category-delete-btn"
-                      onClick={() => handleDelete(student.id)}
-                    >
-                      <FaTrash/>
-                    </button>
+                  
                 </td>
               </tr>
             ))
