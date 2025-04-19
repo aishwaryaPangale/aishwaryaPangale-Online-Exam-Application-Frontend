@@ -14,8 +14,9 @@ const ViewTest = () => {
     const fetchTests = async () => {
         try {
             const res = await axios.get('http://localhost:8081/api/tests/all');
+
             console.log("Fetched Tests:", res.data);
-            setTests(res.data); // Store all, handle disable in rendering
+            setTests(res.data);
         } catch (error) {
             console.error("Error fetching tests:", error);
         }
@@ -43,11 +44,15 @@ const ViewTest = () => {
 
     // Search & Pagination without filter() – just render based on conditions
     const searchedTests = tests.filter(test =>
-        !test.disable && 
-        (test.course_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-         test.batch_name?.toLowerCase().includes(searchTerm.toLowerCase()))
+        !test.disable &&
+        (
+            test.courseName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            test.batchName?.toLowerCase().includes(searchTerm.toLowerCase())
+        )
     );
-    
+
+
+
 
     const totalPages = Math.ceil(searchedTests.length / testsPerPage);
     const indexOfLastTest = currentPage * testsPerPage;
@@ -113,27 +118,25 @@ const ViewTest = () => {
                             </tr>
                         ) : (
                             currentTests.map((test) =>
-                                
-                                    <tr key={test.id}>
-                                        <td>{test.id}</td>
-                                        <td>{test.batch_name}</td>
-                                        <td>{test.course_name}</td>
-                                        <td>{test.date}</td>
-                                        <td>{test.time}</td>
-                                        <td>{test.mode}</td>
-                                        <td>{test.action ? 'Not Attended' : 'Attended'}</td>
-                                        <td>
-                                            <button
-                                                className="btn btn-danger btn-sm"
-                                                onClick={() => disableTest(test.id)}
-                                            >
-                                                Disable
-                                            </button>
-                                        </td>
-                                        <td>{test.ispaperSet ? 'Yes' : 'No'}</td>
-                                    </tr>
-                                )
-                            
+
+                                <tr key={test.id}>
+                                    <td>{test.id}</td>
+                                    <td>{test.batchName}</td>
+                                    <td>{test.courseName}</td>
+                                    <td>{test.date}</td>
+                                    <td>{test.time}</td>
+                                    <td>{test.mode}</td>
+                                    <td>{test.action ? 'Not Attended' : 'Attended'}</td>
+                                    <td>
+                                        <button
+                                            className={`btn btn-sm ${test.action ? 'btn-success' : 'btn-danger'}`}
+                                            onClick={() => disableTest(test.id)}>  Disable
+                                        </button>
+                                    </td>
+                                    <td>{test.ispaperSet ? 'Yes' : 'No'}</td>
+                                </tr>
+                            )
+
                         )}
                     </tbody>
                 </table>
