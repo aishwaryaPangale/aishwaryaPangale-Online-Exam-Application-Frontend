@@ -51,7 +51,7 @@ const Student = () => {
             <img src="https://www.w3schools.com/howto/img_avatar.png" alt="avatar" width="80px" className="rounded-circle border" />
           </div>
 
-          <ul className="nav flex-column   ps-2" style={{ fontSize: "0.9em" }}>
+          <ul className="nav flex-column  ps-2" style={{ fontSize: "0.8em" }}>
             <li className="nav-item mb-2">
               <NavLink to="/student" className="nav-link text-dark">
                 <FaHome className="me-2" /> Home
@@ -60,27 +60,27 @@ const Student = () => {
             {student && (
               <li className="nav-item mb-2">
                 <NavLink to={`/student/profile/${student.username}`} className="nav-link text-dark">
-                  <FaUserCircle className="me-2" /> View Profile
+                  <FaUserCircle className="me-2" /> Profile
                 </NavLink>
               </li>
             )}
             <li className="nav-item mb-2">
               <NavLink to="/student/tests" className="nav-link text-dark">
-                <FaClipboardCheck className="me-2" /> Available Tests
+                <FaClipboardCheck className="me-2" /> Tests
               </NavLink>
             </li>
-            <li className="nav-item mb-2">
+            {/* <li className="nav-item mb-2">
               <NavLink to="/student/attempted" className="nav-link text-dark">
                 <FaListAlt className="me-2" /> Attempted Tests
               </NavLink>
-            </li>
+            </li> */}
             <li className="nav-item mb-3">
               <NavLink to="/student/results" className="nav-link text-dark">
-                <FaCheckCircle className="me-2" /> View Results
+                <FaCheckCircle className="me-2" /> Result
               </NavLink>
             </li>
             <li className="nav-item">
-              <button onClick={handleLogout} className="nav-link text-danger btn btn-link text-start">
+              <button onClick={handleLogout} className="nav-link text-danger btn btn-link text-start fs-5" >
                 <FaSignOutAlt className="me-2" /> Logout
               </button>
             </li>
