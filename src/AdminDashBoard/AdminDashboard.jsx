@@ -142,7 +142,7 @@ const AdminDashboard = () => {
                 <ul className="nav flex-column ms-3 border-start ps-2" style={{ fontSize: "0.8em" }}>
                   <li><NavLink to="/addtest" className="nav-link text-light opacity-75">Add Test</NavLink></li>
                   <li><NavLink to="/viewtests" className="nav-link text-light opacity-75">View Tests</NavLink></li>
-                  <li><NavLink to="/addquestion" className="nav-link text-light opacity-75">Add Question</NavLink></li>
+                  <li><NavLink to="/addquestion" className="nav-link text-light opacity-75 fs-6">Add Question</NavLink></li>
                   <li><NavLink to="/createpaperset" className="nav-link text-light opacity-75">Paper Set</NavLink></li>
                 </ul>
               )}
