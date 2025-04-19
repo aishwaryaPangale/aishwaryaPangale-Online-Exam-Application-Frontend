@@ -23,6 +23,7 @@ import Student from "./StudentDashboard/Student";
 import StudentProfile from "./StudentDashboard/StudentProfile";
 import AddBatch from "./AdminDashBoard/AddBatch";
 import ViewBatch from "./AdminDashBoard/ViewBatch";
+import AvailableTests from "./StudentDashboard/AvailableTest";
 
 
 
@@ -58,6 +59,7 @@ function App() {
 
         <Route path="/student" element={<Student />} />
         <Route path="/student/profile/:username" element={<><Student/><StudentProfile /></>} />
+        <Route path="/student/tests" element={<><Student/><AvailableTests/></>}/>
 
       </Routes>
     </Router>

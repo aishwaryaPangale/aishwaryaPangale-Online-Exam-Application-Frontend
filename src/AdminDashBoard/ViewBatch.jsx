@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { IoMdCloseCircle } from "react-icons/io";
 
 const ViewBatch = () => {
   const [batches, setBatches] = useState([]);
@@ -13,7 +14,7 @@ const ViewBatch = () => {
       })
       .catch((err) => console.error("Error loading batches:", err));
   }, []);
-  
+
 
   const filtered = batches.filter((b) =>
     b.batch_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -21,15 +22,12 @@ const ViewBatch = () => {
 
   return (
     <div className="container mt-4 p-4 shadow text-center mt-4 shadow p-4 bg-transparent position-absolute start-50 top-50 translate-middle" style={{ maxWidth: "600px" }}>
+      <IoMdCloseCircle size={28} className="position-absolute" style={{ top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
+        onClick={() => navigate(-1)} />
       <h3 className="text-center text-danger mb-4 fw-bold">View Batches</h3>
 
-      <input
-        type="text"
-        className="form-control mb-3"
-        placeholder="Search batch by name..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
+      <input type="text" className="form-control mb-3" placeholder="Search batch by name..." value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)} />
 
       <table className="table table-bordered">
         <thead className="table-dark text-center">

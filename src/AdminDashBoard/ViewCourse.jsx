@@ -55,7 +55,7 @@ const ViewCourse = () => {
                 style={{ top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
                 onClick={() => navigate(-1)}
             />
-            <h1 className="text-danger text-center mb-4 display-7 text-danger fw-bold fade-in-up glow-text animate__animated animate__rotateIn">View All Courses</h1>
+            <h2 className="text-danger text-center mb-4 display-7 text-danger fw-bold fade-in-up glow-text animate__animated animate__rotateIn">View All Courses</h2>
 
             <div class="text-start mb-3">
             <input

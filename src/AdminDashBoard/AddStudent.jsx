@@ -42,29 +42,33 @@ const AddStudent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Sending data to backend:", formData);
+
     try {
-      await axios.post("http://localhost:8081/api/register", formData);
-      setMessage("✅ Student added successfully!");
-      setTimeout(() => {
-        setMessage("");
-      }, 2000);
-      setFormData({
-        name: "",
-        email: "",
-        contact: "",
-        birthdate: "",
-        gender: "",
-        address: "",
-        course: "",
-        batch: "",
-        username: "",
-        password: "",
+      const response = await axios.post("http://localhost:8081/api/register", formData, {
+        headers: { "Content-Type": "application/json" }
       });
-    } catch (error) {
-      setMessage("❌ Failed to add student. Please try again.");
+
+      console.log("Server response:", response.data); // 👈 helpful debug
+
+      if (response.data === "Email already exists") {
+        setMessage("❌ Email already exists");
+        setTimeout(() => setMessage(""), 2000);
+      } else if (response.data === "Registered successfully") {
+        setMessage("✅ Add Student Successful!");
+        localStorage.setItem("studentName", response.data.name);
+        localStorage.setItem("username", response.data.username);
+      } else {
+        setMessage("❌ Unexpected server response.");
+        setTimeout(() => setMessage(""), 2000);
+      }
+
+    } catch (err) {
+      console.error("Registration error:", err);
+      setMessage("❌ Error: " + err.message);
+      setTimeout(() => setMessage(""), 2000);
     }
   };
-
   return (
     <div
       className="container shadow p-4 bg-transparent position-absolute start-50 top-50 translate-middle"

@@ -25,7 +25,7 @@ const ViewStudent = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await axios.get("http://localhost:8081/api/register");
+      const res = await axios.get("http://localhost:8081/api/register/all");
       setStudents(res.data);
     } catch (error) {
       console.error("Error fetching students", error);
@@ -50,9 +50,9 @@ const ViewStudent = () => {
   };
 
   const filteredStudents = students.filter((student) =>
-    student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    student.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    student.course.toLowerCase().includes(searchTerm.toLowerCase())
+    (student.name?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
+    (student.email?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
+    (student.course?.toLowerCase() || '').includes(searchTerm.toLowerCase())
   );
 
   const totalPages = Math.ceil(filteredStudents.length / itemsPerPage);
