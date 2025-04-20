@@ -49,7 +49,7 @@ const AddStudent = () => {
         headers: { "Content-Type": "application/json" }
       });
 
-      console.log("Server response:", response.data); // 👈 helpful debug
+      console.log("Server response:", response.data); 
 
       if (response.data === "Email already exists") {
         setMessage("❌ Email already exists");
@@ -72,7 +72,7 @@ const AddStudent = () => {
   return (
     <div
       className="container shadow p-4 bg-transparent position-absolute start-50 top-50 translate-middle"
-      style={{ width: "800px", marginTop: "20px", marginLeft: "100px" }}
+      style={{ width: "900px", marginLeft: "130px",marginTop:"50px",height:"500px"}}
     >
       <IoMdCloseCircle
         size={28}
@@ -80,9 +80,9 @@ const AddStudent = () => {
         style={{ top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
         onClick={() => navigate(-1)}
       />
-      <h2 className="text-center text-danger mb-3 display-7 fw-bold animate__animated animate__rotateIn">
+      <h4 className="text-center text-danger mb-3 ">
         Add Student
-      </h2>
+      </h4>
 
       {message && (
         <p
@@ -98,7 +98,7 @@ const AddStudent = () => {
       )}
 
       <form onSubmit={handleSubmit}>
-        <div className="row g-3">
+        <div className="row g-2">
           <div className="col-md-6">
             <div className="form-floating">
               <input
@@ -217,7 +217,7 @@ const AddStudent = () => {
               >
                 <option value="">Select Batch</option>
                 {batches.map((batch, index) => (
-                  <option key={`batch-${index}`} value={batch.batchName}>
+                  <option key={`batch-${index}`} value={batch.batchame}>
                     {batch.batchName}
                   </option>
                 ))}

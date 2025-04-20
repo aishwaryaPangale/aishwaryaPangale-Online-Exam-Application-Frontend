@@ -41,11 +41,11 @@ const AddCourse = () => {
   };
 
   return (
-    <div className="container mt-4 shadow p-4 bg-light position-absolute start-50 top-50 translate-middle" style={{ width: "500px" }}>
+    <div className="container mt-4 shadow p-4 bg-light position-absolute start-50 top-50 translate-middle" style={{ width: "900px", marginLeft: "130px" }}>
       <IoMdCloseCircle
         size={26}
         style={{ position: "absolute", top: "15px", right: "15px", color: "#dc3545", cursor: "pointer" }}
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/Course")}
       />
 
       <h4 className="text-center mb-3 text-danger fw-bold">Add Course</h4>

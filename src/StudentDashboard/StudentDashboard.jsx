@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import axios from "axios";
 
-const Student = () => {
+const StudentDashboard = () => {
   const [showSidebar, setShowSidebar] = useState(true);
   const [student, setStudent] = useState(null);
   const navigate = useNavigate();
@@ -53,19 +53,19 @@ const Student = () => {
 
           <ul className="nav flex-column  ps-2" style={{ fontSize: "0.8em" }}>
             <li className="nav-item mb-2">
-              <NavLink to="/student" className="nav-link text-dark">
+              <NavLink to="/studentDashboard" className="nav-link text-dark">
                 <FaHome className="me-2" /> Home
               </NavLink>
             </li>
             {student && (
               <li className="nav-item mb-2">
-                <NavLink to={`/student/profile/${student.username}`} className="nav-link text-dark">
+                <NavLink to={`/studentDashboard/profile/${student.username}`} className="nav-link text-dark">
                   <FaUserCircle className="me-2" /> Profile
                 </NavLink>
               </li>
             )}
             <li className="nav-item mb-2">
-              <NavLink to="/student/tests" className="nav-link text-dark">
+              <NavLink to="/studentDashboard/tests" className="nav-link text-dark">
                 <FaClipboardCheck className="me-2" /> Tests
               </NavLink>
             </li>
@@ -75,7 +75,7 @@ const Student = () => {
               </NavLink>
             </li> */}
             <li className="nav-item mb-3">
-              <NavLink to="/student/results" className="nav-link text-dark">
+              <NavLink to="/studentDashboard/results" className="nav-link text-dark">
                 <FaCheckCircle className="me-2" /> Result
               </NavLink>
             </li>
@@ -88,7 +88,7 @@ const Student = () => {
         </nav>
 
         <main className="flex-grow-1 p-4 overflow-auto" style={{ backgroundColor: "#f0f2f5" }}>
-          {location.pathname === "/student" ? (
+          {location.pathname === "/studentDashboard" ? (
             <div className="text-center mt-4">
               <h2>Welcome, {student ? student.name : "Student"}!</h2>
               <p className="text-muted">Explore your dashboard and get ready to ace your exams!</p>
@@ -102,4 +102,4 @@ const Student = () => {
   );
 };
 
-export default Student;
+export default StudentDashboard;
