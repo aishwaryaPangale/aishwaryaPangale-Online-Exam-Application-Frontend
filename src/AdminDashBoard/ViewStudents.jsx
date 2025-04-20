@@ -65,7 +65,7 @@ const ViewStudent = () => {
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
   return (
-    <div className="container shadow-lg position-absolute start-50 top-50 translate-middle w-75 p-4" style={{ marginLeft: "110px" }}>
+    <div className="container shadow-lg position-absolute start-50 top-50 translate-middle w-75 p-4"  style={{ width: "900px", marginLeft: "130px"}}>
       <IoMdCloseCircle
         size={28}
         className="position-absolute"
@@ -73,9 +73,9 @@ const ViewStudent = () => {
         onClick={() => navigate(-1)}
       />
 
-      <h2 className="mb-4 text-center text-danger display-7 fw-bold animate__animated animate__rotateIn">
+      <h4 className="mb-4 text-center text-danger ">
         All Students
-      </h2>
+      </h4>
 
       {message && (
         <div style={{ color: message.includes("❌") ? "red" : "green", backgroundColor: "white", padding: "6px 12px", borderRadius: "4px" }}>

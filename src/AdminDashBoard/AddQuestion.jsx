@@ -37,7 +37,7 @@ const AddQuestion = () => {
   };
 
   return (
-    <div className="container text-center shadow p-4 bg-light rounded position-absolute start-50 top-50 translate-middle" style={{ width: "500px" }}>
+    <div className="container text-center shadow p-4 bg-light rounded position-absolute start-50 top-50 translate-middle" style={{ width: "900px", marginLeft: "130px" }}>
       <IoMdCloseCircle size={26} style={{ position: "absolute", top: "15px", right: "15px", color: "#dc3545", cursor: "pointer" }}
          onClick={() => navigate(-1)} />
 
@@ -47,7 +47,7 @@ const AddQuestion = () => {
 
       <input type="file" accept=".csv" onChange={handleFileChange} className="form-control mb-3"/>
 
-      <button onClick={handleUpload} className="btn btn-outline-danger w-100 mt-2" > Upload</button>
+      <button onClick={handleUpload} className="btn btn-outline-danger w-20 mt-2" > Upload</button>
     </div>
   );
 };

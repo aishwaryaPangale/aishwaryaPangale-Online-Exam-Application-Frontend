@@ -48,11 +48,11 @@ const AddBatch = () => {
   };
 
   return (
-    <div className="container text-center mt-4 shadow p-4 position-absolute start-50 top-50 translate-middle" style={{ width: "500px" }}>
+    <div className="container text-center mt-4 shadow p-4 position-absolute start-50 top-50 translate-middle" style={{ width: "900px", marginLeft: "130px" }}>
       <IoMdCloseCircle size={28} style={{ position: "absolute", top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
         onClick={() => navigate(-1)} />
 
-      <h3 className="text-danger mb-3 fw-bold">Add Batch</h3>
+      <h4 className="text-danger mb-3 fw-bold">Add Batch</h4>
 
       {message && <p style={{ color: message.includes("❌") ? "red" : "green" }}>{message}</p>}
 

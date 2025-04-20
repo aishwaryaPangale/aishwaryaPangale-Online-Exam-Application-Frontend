@@ -60,7 +60,7 @@ const AddTest = () => {
   
 
   return (
-    <div className="container shadow p-4 rounded position-absolute start-50 top-50 translate-middle" style={{ width: '600px' }} >
+    <div className="container text-center shadow p-4 rounded position-absolute start-50 top-50 translate-middle" style={{ width: "900px", marginLeft: "130px" ,marginTop:"50px"}} >
       <IoMdCloseCircle size={28} style={{ position: 'absolute', top: '15px', right: '15px', cursor: 'pointer', color: '#dc3545' }}
          onClick={() => navigate(-1)}/>
 
@@ -73,7 +73,7 @@ const AddTest = () => {
       )}
 
       <form onSubmit={handleSubmit}>
-        <div className="mb-3 form-floating">
+        <div className="mb-2 form-floating">
           <select name="batchId" className="form-select" value={test.batchId} onChange={handleChange} required >
             <option value="">Select Batch</option>
             {batches.map((batch, i) => (
@@ -85,7 +85,7 @@ const AddTest = () => {
           <label>Batch</label>
         </div>
 
-        <div className="mb-3 form-floating">
+        <div className="mb-2 form-floating">
           <select name="courseId" className="form-select" value={test.courseId} onChange={handleChange} required >
             <option value="">Select Course</option>
             {courses.map((course, i) => (
@@ -97,17 +97,17 @@ const AddTest = () => {
           <label>Course</label>
         </div>
 
-        <div className="mb-3 form-floating">
+        <div className="mb-2 form-floating">
           <input type="date" name="date" className="form-control" value={test.date} onChange={handleChange} required />
           <label>Date</label>
         </div>
 
-        <div className="mb-3 form-floating">
+        <div className="mb-2 form-floating">
           <input type="time" name="time" className="form-control" value={test.time} onChange={handleChange} required />
           <label>Time</label>
         </div>
 
-        <div className="mb-4 form-floating">
+        <div className="mb-2 form-floating">
           <select name="mode" className="form-select" value={test.mode} onChange={handleChange} required>
             <option value="Offline">Offline</option>
             <option value="Online">Online</option>
@@ -115,7 +115,7 @@ const AddTest = () => {
           <label>Mode</label>
         </div>
 
-        <button type="submit" className="btn btn-outline-danger w-100" disabled={loading}>
+        <button type="submit" className="btn btn-outline-danger w-20" disabled={loading}>
           {loading ? 'Adding...' : 'Add Test'}
         </button>
       </form>

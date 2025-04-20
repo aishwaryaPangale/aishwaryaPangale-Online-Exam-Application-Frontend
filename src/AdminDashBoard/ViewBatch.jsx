@@ -33,7 +33,7 @@ const ViewBatch = () => {
 
   return (
     <div className="container mt-4 p-4 shadow text-center bg-transparent position-absolute start-50 top-50 translate-middle"
-      style={{ maxWidth: "600px", minHeight: "500px" }}>
+    style={{ width: "900px", marginLeft: "130px"}}>
       <IoMdCloseCircle
         size={28}
         className="position-absolute"
@@ -41,7 +41,7 @@ const ViewBatch = () => {
         onClick={() => navigate(-1)}
       />
 
-      <h3 className="text-center text-danger mb-4 fw-bold">View Batches</h3>
+      <h4 className="text-center text-danger mb-4 fw-bold">View Batches</h4>
 
       <input
         type="text"

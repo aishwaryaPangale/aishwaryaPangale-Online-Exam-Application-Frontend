@@ -75,7 +75,7 @@ const Login = () => {
 
             setTimeout(() => {
                 // navigate(`/student/profile/${username}`);
-                navigate("/student");
+                navigate("/studentDashboard");
                 setMessage("");
             }, 1500);
 

@@ -72,14 +72,14 @@ const ViewTest = () => {
     };
 
     return (
-        <div className="container text-center shadow-lg p-4 rounded position-absolute start-50 top-50 translate-middle" style={{ width: "900px", marginLeft: "100px" }}>
+        <div className="container text-center shadow-lg p-4 rounded position-absolute start-50 top-50 translate-middle" style={{ width: "900px", marginLeft: "130px" }}>
             <IoMdCloseCircle
                 size={28}
                 className="position-absolute"
                 style={{ top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
                 onClick={() => navigate(-1)}
             />
-            <h3 className="text-danger mb-4 fw-bold">View Tests</h3>
+            <h4 className="text-danger mb-4 fw-bold">View Tests</h4>
 
             {/* Search bar */}
             <div className="mb-3 text-start">

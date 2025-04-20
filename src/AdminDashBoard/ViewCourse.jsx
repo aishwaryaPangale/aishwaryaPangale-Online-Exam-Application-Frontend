@@ -48,14 +48,14 @@ const ViewCourse = () => {
     };
 
     return (
-        <div className="container mt-4 text-center shadow-lg p-4 rounded position-absolute start-50 top-50 translate-middle" style={{ width: "900px", marginLeft: "100px" }}>
+        <div className="container mt-4 text-center shadow-lg p-4 rounded position-absolute start-50 top-50 translate-middle" style={{ width: "900px", marginLeft: "130px" }}>
             <IoMdCloseCircle
                 size={28}
                 className="position-absolute"
                 style={{ top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
                 onClick={() => navigate(-1)}
             />
-            <h2 className="text-danger text-center mb-4 display-7 text-danger fw-bold fade-in-up glow-text animate__animated animate__rotateIn">View All Courses</h2>
+            <h4 className="text-center mb-3 text-danger fw-bold ">View All Courses</h4>
 
             <div class="text-start mb-3">
             <input
