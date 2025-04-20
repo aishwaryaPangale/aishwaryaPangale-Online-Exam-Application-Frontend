@@ -40,7 +40,7 @@ const UpdateCourse = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put('http://localhost:8081/api/courses/update', course);
+      await axios.put(`http://localhost:8081/api/courses/update/${id}`, course);
       setMessage('✅ Course updated successfully!');
       setTimeout(() => {
         navigate('/viewcourses');
