@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // ✅ Import useNavigate
 
 const AvailableTest = () => {
   const [tests, setTests] = useState([]);
   const [error, setError] = useState('');
+  const navigate = useNavigate(); // ✅ Initialize navigate
 
-  const username = "sush"; // Replace with actual logged-in username
+  const username = localStorage.getItem("username") || "sush";
 
   useEffect(() => {
     fetchAvailableTests();
@@ -22,6 +24,10 @@ const AvailableTest = () => {
       setError('Failed to fetch tests. Please try again later.');
       setTests([]);
     }
+  };
+
+  const handleStartTest = (testId) => {
+    navigate(`/startTest/${testId}`); // ✅ Navigate to start test page
   };
 
   return (
@@ -57,7 +63,7 @@ const AvailableTest = () => {
                     <button
                       className={`btn ${hasStarted ? 'btn-success' : 'btn-primary'}`}
                       disabled={!hasStarted}
-                      onClick={() => alert(`Starting test ID: ${test.testId}`)}
+                      onClick={() => hasStarted && handleStartTest(test.id)} // ✅ Navigate when green
                     >
                       {hasStarted ? 'Start Test' : 'Not Started'}
                     </button>

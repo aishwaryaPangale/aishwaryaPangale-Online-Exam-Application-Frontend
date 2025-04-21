@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import { IoMdCloseCircle } from "react-icons/io";
 import "animate.css";
-import {FaEdit,FaTrash} from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const ViewStudent = () => {
   const [students, setStudents] = useState([]);
@@ -11,6 +11,9 @@ const ViewStudent = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [selectedStudentId, setSelectedStudentId] = useState(null);
+  const [actionType, setActionType] = useState(""); // "delete" or "edit"
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,21 +35,16 @@ const ViewStudent = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:8081/api/register/${id}`);
-      const updated = students.filter((s) => s.id !== id);
-      setStudents(updated);
-      setMessage("✅ Student deleted successfully");
-      setTimeout(() => setMessage(""), 2000);
-    } catch (error) {
-      console.error("Error deleting student", error);
-      setMessage("❌ Error deleting student");
-    }
+  const handleDelete = (id) => {
+    setSelectedStudentId(id);
+    setActionType("delete");
+    setShowConfirmModal(true);
   };
 
   const handleEdit = (id) => {
-    navigate(`/updatestudent/${id}`);
+    setSelectedStudentId(id);
+    setActionType("edit");
+    setShowConfirmModal(true);
   };
 
   const filteredStudents = students.filter((student) =>
@@ -65,7 +63,7 @@ const ViewStudent = () => {
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
   return (
-    <div className="container shadow-lg position-absolute start-50 top-50 translate-middle w-75 p-4"  style={{ width: "900px", marginLeft: "130px"}}>
+    <div className="container shadow-lg position-absolute start-50 top-50 translate-middle w-75 p-4" style={{ width: "900px", marginLeft: "130px" }}>
       <IoMdCloseCircle
         size={28}
         className="position-absolute"
@@ -73,7 +71,7 @@ const ViewStudent = () => {
         onClick={() => navigate(-1)}
       />
 
-      <h4 className="mb-4 text-center text-danger ">
+      <h4 className="mb-4 text-center text-danger">
         All Students
       </h4>
 
@@ -119,16 +117,18 @@ const ViewStudent = () => {
                 <td>{student.course}</td>
                 <td>{student.batch}</td>
                 <td>
-                  {/* <button className="btn btn-sm btn-primary me-2" onClick={() => handleEdit(student.id)}>Edit</button>
-                  <button className="btn btn-sm btn-danger" onClick={() => handleDelete(student.id)}>Delete</button> */}
-                   <button
-                      className="view-category-icon-btn view-category-delete-btn"
-                      onClick={() => handleDelete(student.id)}>
-                      <FaTrash/> </button>
-                  <button className="view-category-icon-btn view-category-edit-btn" onClick={() => handleEdit(student.id)}>
-                      <FaEdit  />
-                    </button>
-                  
+                  <button
+                    className="view-category-icon-btn view-category-delete-btn"
+                    onClick={() => handleDelete(student.id)}
+                  >
+                    <FaTrash />
+                  </button>
+                  <button
+                    className="view-category-icon-btn view-category-edit-btn"
+                    onClick={() => handleEdit(student.id)}
+                  >
+                    <FaEdit />
+                  </button>
                 </td>
               </tr>
             ))
@@ -142,7 +142,7 @@ const ViewStudent = () => {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="d-flex  justify-content-end align-items-center gap-2 mt-3 ">
+        <div className="d-flex justify-content-end align-items-center gap-2 mt-3">
           <button className="btn btn-outline-primary" onClick={prevPage} disabled={currentPage === 1}>
             Prev
           </button>
@@ -158,6 +158,57 @@ const ViewStudent = () => {
           <button className="btn btn-outline-primary" onClick={nextPage} disabled={currentPage === totalPages}>
             Next
           </button>
+        </div>
+      )}
+
+      {/* Confirmation Modal */}
+      {showConfirmModal && (
+        <div className="modal d-block" tabIndex="-1" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
+          <div className="modal-dialog modal-dialog-centered" style={{ width:"400px"}}>
+            <div className="modal-content">
+              <div className="modal-header bg-danger text-white">
+                <h5 className="modal-title">{actionType === "delete" ? "Confirm Delete" : "Confirm Edit"}</h5>
+                <button type="button" className="btn-close" onClick={() => setShowConfirmModal(false)}></button>
+              </div>
+              <div className="modal-body">
+                <p>{actionType === "delete" ? "Are you sure you want to delete this student?" : "Do you want to update this student's details?"}</p>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setShowConfirmModal(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className={`btn ${actionType === "delete" ? "btn-danger" : "btn-primary"}`}
+                  onClick={async () => {
+                    if (actionType === "delete") {
+                      try {
+                        await axios.delete(`http://localhost:8081/api/register/${selectedStudentId}`);
+                        const updated = students.filter((s) => s.id !== selectedStudentId);
+                        setStudents(updated);
+                        setMessage("✅ Student deleted successfully");
+                      } catch (error) {
+                        console.error("Error deleting student", error);
+                        setMessage("❌ Error deleting student");
+                      } finally {
+                        setShowConfirmModal(false);
+                        setTimeout(() => setMessage(""), 2000);
+                      }
+                    } else {
+                      navigate(`/updatestudent/${selectedStudentId}`);
+                      setShowConfirmModal(false);
+                    }
+                  }}
+                >
+                  {actionType === "delete" ? "Delete" : "Update"}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
