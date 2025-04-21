@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { FaUsers, FaBookOpen, FaLayerGroup } from "react-icons/fa";
 import {
   FaHome, FaBook, FaClipboardList, FaUserGraduate,
   FaChartBar, FaSignOutAlt
 } from "react-icons/fa";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const AdminDashboard = () => {
@@ -11,21 +13,47 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const username = localStorage.getItem("adminUsername");
 
+  const [counts, setCounts] = useState({
+    students: 0,
+    courses: 0,
+    batches: 0,
+  });
+
   const handleLogout = () => {
     localStorage.removeItem("adminUsername");
     navigate("/");
   };
 
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const [studentRes, courseRes, batchRes] = await Promise.all([
+          axios.get("http://localhost:8081/api/students/count"),
+          axios.get("http://localhost:8081/api/courses/count"),
+          axios.get("http://localhost:8081/api/batches/count"),
+        ]);
+
+        setCounts({
+          students: studentRes.data.count,
+          courses: courseRes.data.count,
+          batches: batchRes.data.count,
+        });
+      } catch (err) {
+        console.error("Failed to fetch dashboard counts", err);
+      }
+    };
+
+    fetchCounts();
+  }, []);
+
   return (
     <div className="d-flex flex-column vh-100">
-      {/* Internal styles for hover */}
       <style>
         {`
           .nav-link:hover {
-            // background-color: #343a40;
             color: white !important;
             border-radius: 5px;
-        }
+          }
         `}
       </style>
 
@@ -91,10 +119,47 @@ const AdminDashboard = () => {
         {/* Main Content */}
         <main className="flex-grow-1 p-4" style={{ backgroundColor: "#f8f9fa" }}>
           {location.pathname === "/admin" ? (
-            <div className="text-center mt-5">
-              <h2>Welcome to Admin Dashboard</h2>
-              <p className="text-muted">Select an option from the sidebar to continue.</p>
+            <div>
+            <h2 className="mb-4 text-center">Welcome to Admin Dashboard</h2>
+            <div className="row">
+              <div className="col-md-4 mb-3">
+                <div className="card shadow-sm border-0 dashboard-card">
+                  <div className="card-body text-center">
+                    <div className="icon-circle bg-primary">
+                      <FaUsers />
+                    </div>
+                    <h5 className="card-title text-primary">Total Students</h5>
+                    <h3>{counts.students}</h3>
+                  </div>
+                </div>
+              </div>
+          
+              <div className="col-md-4 mb-3">
+                <div className="card shadow-sm border-0 dashboard-card">
+                  <div className="card-body text-center">
+                    <div className="icon-circle bg-success">
+                      <FaBookOpen />
+                    </div>
+                    <h5 className="card-title text-success">Total Courses</h5>
+                    <h3>{counts.courses}</h3>
+                  </div>
+                </div>
+              </div>
+          
+              <div className="col-md-4 mb-3">
+                <div className="card shadow-sm border-0 dashboard-card">
+                  <div className="card-body text-center">
+                    <div className="icon-circle bg-warning">
+                      <FaLayerGroup />
+                    </div>
+                    <h5 className="card-title text-warning">Total Batches</h5>
+                    <h3>{counts.batches}</h3>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+          
           ) : (
             <Outlet />
           )}

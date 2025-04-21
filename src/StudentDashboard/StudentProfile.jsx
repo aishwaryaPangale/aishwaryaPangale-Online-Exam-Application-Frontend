@@ -8,6 +8,7 @@ const StudentProfile = () => {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -44,10 +45,12 @@ const StudentProfile = () => {
       await axios.put(`http://localhost:8081/api/register/update/${username}`, formData);
       setStudent(formData);
       setIsEditing(false);
-      alert("Profile updated successfully!");
+      setMessage("✅ Profile updated successfully!");
+      setTimeout(() => setMessage(""), 2000);
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("Failed to update profile.");
+      setMessage("❌ Failed to update profile.");
+      setTimeout(() => setMessage(""), 2000);
     }
   };
 
@@ -55,36 +58,40 @@ const StudentProfile = () => {
   if (!student) return <div className="container mt-5">No profile data found.</div>;
 
   return (
-    <div className="container mt-5 p-4 bg-white shadow rounded w-75 mx-auto position-absolute start-50 top-50 translate-middle" style={{ maxWidth: "700px" }}>
-      <h3 className="mb-4 text-primary">👨‍🎓 Student Profile</h3>
-      <div className="row">
-        {["name", "username", "email", "contact", "gender", "birthdate", "course", "batch", "address"].map((field, idx) => (
-          <div key={idx} className={`col-md-6 mb-3 ${field === "address" ? "col-12" : ""}`}>
-            <strong>{field.charAt(0).toUpperCase() + field.slice(1)}:</strong>
-            {isEditing ? (
-              <input
-                type="text"
-                className="form-control mt-1"
-                name={field}
-                value={formData[field] || ""}
-                onChange={handleChange}
-              />
-            ) : (
-              <span className="ms-2">{student[field]}</span>
-            )}
-          </div>
-        ))}
-      </div>
+    <div className="d-flex justify-content-center align-items-center vh-100 w-75 position-absolute start-50 top-50 translate-middle mt-4">
+      <div className="p-2 bg-white shadow rounded " style={{ maxWidth: "800px",marginLeft:"200px" }}>
+        {message && <p style={{ color: message.includes("❌") ? "red" : "green" }}>{message}</p>}
 
-      <div className="d-flex justify-content-end">
-        {isEditing ? (
-          <>
-            <button className="btn btn-success me-2" onClick={handleUpdate}>Update</button>
-            <button className="btn btn-secondary" onClick={() => { setIsEditing(false); setFormData(student); }}>Cancel</button>
-          </>
-        ) : (
-          <button className="btn btn-primary" onClick={() => setIsEditing(true)}>Edit</button>
-        )}
+        <h3 className="mb-4 text-primary">👨‍🎓 Student Profile</h3>
+        <div className="row ">
+          {["name", "username", "email", "contact", "gender", "birthdate", "course", "batch", "address"].map((field, idx) => (
+            <div key={idx} className={`col-md-6 mb-3 ${field === "address" ? "col-12" : ""}`}>
+              <strong>{field.charAt(0).toUpperCase() + field.slice(1)}:</strong>
+              {isEditing ? (
+                <input
+                  type="text"
+                  className="form-control mt-1"
+                  name={field}
+                  value={formData[field] || ""}
+                  onChange={handleChange}
+                />
+              ) : (
+                <span className="ms-2">{student[field]}</span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="d-flex justify-content-end">
+          {isEditing ? (
+            <>
+              <button className="btn btn-success me-2" onClick={handleUpdate}>Update</button>
+              <button className="btn btn-secondary" onClick={() => { setIsEditing(false); setFormData(student); }}>Cancel</button>
+            </>
+          ) : (
+            <button className="btn btn-primary" onClick={() => setIsEditing(true)}>Edit</button>
+          )}
+        </div>
       </div>
     </div>
   );

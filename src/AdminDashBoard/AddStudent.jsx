@@ -58,6 +58,8 @@ const AddStudent = () => {
         setMessage("✅ Add Student Successful!");
         localStorage.setItem("studentName", response.data.name);
         localStorage.setItem("username", response.data.username);
+        setTimeout(() => setMessage(""), 2000);
+
       } else {
         setMessage("❌ Unexpected server response.");
         setTimeout(() => setMessage(""), 2000);
