@@ -74,7 +74,7 @@ const AdminLogin = () => {
               required
             />
           </div>
-n
+
           <div className="mb-6">
             <label htmlFor="password" className="block text-white mb-1">Password</label>
             <input

@@ -23,6 +23,7 @@ import Batch from "./AdminDashBoard/Batch";
 import StudentDashboard from "./StudentDashboard/StudentDashboard";
 import Student from "./AdminDashBoard/Student";
 import Test from "./AdminDashBoard/Test";
+import StartTest from "./StudentDashboard/StartTest";
 
 
 
@@ -47,13 +48,14 @@ function App() {
       <Route path="/Student" element={<><AdminDashboard/><Student/></>}/>
        <Route path="/updatestudent/:id" element={<><AdminDashboard /><UpdateStudent /></>} />
        <Route path="/test" element={<><AdminDashboard/><Test/></>}/>
-       
+  
 
 
 
         <Route path="/studentDashboard" element={<StudentDashboard />} />
         <Route path="/studentDashboard/profile/:username" element={<><StudentDashboard/><StudentProfile /></>} />
         <Route path="/studentDashboard/tests" element={<><StudentDashboard/><AvailableTests/></>}/>
+        <Route path="/startTest/:testId" element={<><StudentDashboard/><StartTest/></>}/>
 
       </Routes>
     </Router>
