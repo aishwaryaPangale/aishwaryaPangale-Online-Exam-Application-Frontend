@@ -24,6 +24,8 @@ import StudentDashboard from "./StudentDashboard/StudentDashboard";
 import Student from "./AdminDashBoard/Student";
 import Test from "./AdminDashBoard/Test";
 import StartTest from "./StudentDashboard/StartTest";
+import TestResult from "./StudentDashboard/TestResult";
+import StudentReport from "./StudentDashboard/StudentReport";
 
 
 
@@ -56,7 +58,8 @@ function App() {
         <Route path="/studentDashboard/profile/:username" element={<><StudentDashboard/><StudentProfile /></>} />
         <Route path="/studentDashboard/tests" element={<><StudentDashboard/><AvailableTests/></>}/>
         <Route path="/startTest/:testId" element={<><StudentDashboard/><StartTest/></>}/>
-
+        <Route path="/studentDashboard/testResult" element={<><StudentDashboard/><TestResult/></>}/>
+        <Route path="/studentDashboard/studentReport" element={<><StudentDashboard/><StudentReport/></>}/>
       </Routes>
     </Router>
   );

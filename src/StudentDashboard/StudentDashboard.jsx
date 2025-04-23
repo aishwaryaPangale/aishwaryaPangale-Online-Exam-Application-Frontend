@@ -21,6 +21,8 @@ const StudentDashboard = () => {
       try {
         const res = await axios.get(`http://localhost:8081/api/register/username/${username}`);
         setStudent(res.data);
+        const studentName = res.data.name; // Replace with your actual data
+        localStorage.setItem("name", studentName);
       } catch (err) {
         console.error("Error fetching student data:", err);
       }
@@ -74,11 +76,13 @@ const StudentDashboard = () => {
                 <FaListAlt className="me-2" /> Attempted Tests
               </NavLink>
             </li> */}
-            <li className="nav-item mb-3">
-              <NavLink to="/studentDashboard/results" className="nav-link text-dark">
-                <FaCheckCircle className="me-2" /> Result
+
+            <li className="nav-item mb-2">
+              <NavLink to="/studentDashboard/studentReport" className="nav-link text-dark">
+                <FaListAlt className="me-2" /> Report
               </NavLink>
             </li>
+
             <li className="nav-item">
               <button onClick={handleLogout} className="nav-link text-danger btn btn-link text-start fs-5" >
                 <FaSignOutAlt className="me-2" /> Logout
