@@ -76,8 +76,11 @@ const AddCourse = () => {
           <input type="text" id="courseContent" name="courseContent" className="form-control" placeholder="Content" value={course.courseContent} onChange={handleChange} required />
           <label htmlFor="courseContent">Course Content</label>
         </div>
+        
+        <div className="d-flex justify-content-center ">        
+          <button type="submit" className="btn btn-outline-danger  w-25 mt-3">Add Course</button>
+        </div>
 
-        <button type="submit" className="btn btn-outline-danger w-100 mt-3">Add Course</button>
       </form>
     </div>
   );
