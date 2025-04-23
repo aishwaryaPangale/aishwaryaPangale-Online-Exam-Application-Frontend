@@ -117,7 +117,7 @@ const UpdateCourse = () => {
         </div>
 
         <div className="text-center">
-          <button type="submit" className="btn btn-success">Update Course</button>
+          <button type="submit" className="btn btn-outline-success">Update Course</button>
         </div>
       </form>
 
