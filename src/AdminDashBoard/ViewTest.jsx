@@ -123,7 +123,7 @@ const ViewTest = () => {
                             currentTests.map((test) =>
 
                                 <tr key={test.id}>
-                                    <td>{test.id}</td>
+                                    <td>{test.id}</td> 
                                     <td>{test.batchName}</td>
                                     <td>{test.courseName}</td>
                                     <td>{test.date}</td>
