@@ -13,15 +13,18 @@ const ViewTest = () => {
     // Fetch all tests
     const fetchTests = async () => {
         try {
-            const res = await axios.get('http://localhost:8081/api/tests/all');
+            const username = localStorage.getItem('username'); // or from context/state
 
+            const res = await axios.get('http://localhost:8081/api/tests/action/all', {
+                params: { username } // Replace with actual logged-in username
+            });
             console.log("Fetched Tests:", res.data);
             setTests(res.data);
         } catch (error) {
             console.error("Error fetching tests:", error);
         }
     };
-
+    
     useEffect(() => {
         fetchTests();
     }, []);

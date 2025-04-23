@@ -7,7 +7,7 @@ const AvailableTest = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate(); // ✅ Initialize navigate
 
-  const username = localStorage.getItem("username") || "sush";
+  const username = localStorage.getItem("username");
 
   useEffect(() => {
     fetchAvailableTests();
