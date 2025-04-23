@@ -104,7 +104,7 @@ const AdminDashboard = () => {
               </NavLink>
             </li>
             <li className="nav-item mb-2">
-              <NavLink to="/reports" className="nav-link text-dark">
+              <NavLink to="/studentwisereport" className="nav-link text-dark">
                 <FaChartBar className="me-2" /> Reports
               </NavLink>
             </li>
