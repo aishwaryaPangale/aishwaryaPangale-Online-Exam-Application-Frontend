@@ -50,7 +50,7 @@ const ViewTest = () => {
             console.log("Test disabled:", disableResponse.data);
 
             // Update the action of the test after disabling it
-            const updateActionResponse = await axios.put(`http://localhost:8081/api/tests/submit/${id}`);
+            const updateActionResponse = await axios.post(`http://localhost:8081/api/tests/submit/${id}`);
             console.log("Test action updated:", updateActionResponse.data);
 
             // Update the local state for the disabled test and action
