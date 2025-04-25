@@ -26,6 +26,7 @@ import Test from "./AdminDashBoard/Test";
 import StartTest from "./StudentDashboard/StartTest";
 import TestResult from "./StudentDashboard/TestResult";
 import StudentReport from "./StudentDashboard/StudentReport";
+import StudentWiseReport from "./AdminDashBoard/StudentWiseReport";
 
 
 
@@ -50,6 +51,7 @@ function App() {
       <Route path="/Student" element={<><AdminDashboard/><Student/></>}/>
        <Route path="/updatestudent/:id" element={<><AdminDashboard /><UpdateStudent /></>} />
        <Route path="/test" element={<><AdminDashboard/><Test/></>}/>
+       <Route path="/studentwisereport" element={<><AdminDashboard/><StudentWiseReport/></>}/>
   
 
 

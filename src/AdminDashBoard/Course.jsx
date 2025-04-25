@@ -7,7 +7,7 @@ const Course = () => {
   const [activeView, setActiveView] = useState("");
 
   return (
-    <div className="container shadow p-4 bg-transparent " >
+    <div className="">
       {/* <h2 className="mb-4">Course Management</h2> */}
       <div className="mb-3 d-flex gap-3" style={{marginLeft:"100px",width:"800px",position:"absolute",top:"50px",left:"200px"}}>
         <button className="btn btn-primary" onClick={() => setActiveView("add")}>

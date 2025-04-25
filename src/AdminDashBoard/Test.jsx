@@ -4,7 +4,6 @@ import ViewTest from "./ViewTest";
 import AddQuestion from "./AddQuestion";
 import CreatePaperSet from "./CreatePaperSet";
 
-
 const Test = () => {
   const [selectedSection, setSelectedSection] = useState("");
 
@@ -17,47 +16,39 @@ const Test = () => {
       case "question":
         return <AddQuestion />;
       case "paper":
-        return <CreatePaperSet/>;
+        return <CreatePaperSet />;
       default:
-        return (
-          <div className="text-center mt-5">
-            <h4>Select a section to continue</h4>
-          </div>
-        );
+        return null;
     }
   };
 
   return (
     <div>
-      <div className="d-flex justify-content-center gap-3 mb-4" style={{width:"800px",position:"absolute",top:"50px",left:"120px"}}>
-        <span
-          className="badge bg-primary p-3 fs-6"
-          style={{ cursor: "pointer" }}
+      <div className="d-flex justify-content-center gap-3 mb-4" style={{ width: "800px", position: "absolute", top: "50px", left: "120px" }}>
+        <button
+          className="btn btn-primary"
           onClick={() => setSelectedSection("add")}
         >
           Add Test
-        </span>
-        <span
-          className="badge  bg-secondary p-3 fs-6"
-          style={{ cursor: "pointer" }}
+        </button>
+        <button
+          className="btn btn-secondary"
           onClick={() => setSelectedSection("view")}
         >
           View Test
-        </span>
-        <span
-          className="badge bg-warning text-dark p-3 fs-6"
-          style={{ cursor: "pointer" }}
+        </button>
+        <button
+          className="btn btn-warning text-dark"
           onClick={() => setSelectedSection("question")}
         >
           Add Question
-        </span>
-        <span
-          className="badge bg-info text-dark p-3 fs-6"
-          style={{ cursor: "pointer" }}
+        </button>
+        <button
+          className="btn btn-info text-dark"
           onClick={() => setSelectedSection("paper")}
         >
           Paper Set
-        </span>
+        </button>
       </div>
 
       <div>{renderSection()}</div>

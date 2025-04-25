@@ -108,7 +108,7 @@ const AdminDashboard = () => {
                 <FaChartBar className="me-2" /> Reports
               </NavLink>
             </li>
-            <li className="nav-item mt-3">
+            <li className="nav-item mt-2">
               <button onClick={handleLogout} className="btn btn-link nav-link text-danger text-start fs-4">
                 <FaSignOutAlt className="me-2" /> Logout
               </button>

@@ -67,8 +67,9 @@ const AddBatch = () => {
             <option value="">Select Course</option>
             {courses.map(course => (
               <option key={course.id} value={course.id}>
-                {course.courseName}
-              </option>
+              {course.courseName}
+            </option>
+            
             ))}
           </select>
           <label>Select Course</label>

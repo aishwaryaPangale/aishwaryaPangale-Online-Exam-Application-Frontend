@@ -70,7 +70,20 @@ const ViewCourse = () => {
     };
 
     return (
-        <div className="container mt-4 text-center shadow-lg p-4 rounded position-absolute start-50 top-50 translate-middle" style={{ width: "900px", marginLeft: "130px" }}>
+        <div className="container mt-4 text-center shadow-lg p-4 rounded position-absolute start-50 top-50 translate-middle" 
+        style={{
+            width:"900px",
+            marginLeft:"130px",
+            marginTop:"60px",
+            maxHeight: '500px',
+            overflowY: 'auto',
+            border: '1px solid #ccc',
+            borderRadius: '8px',
+            padding: '10px',
+            backgroundColor: '#f8f9fa',
+            scrollbarWidth: 'none',      // Firefox
+            msOverflowStyle: 'none'      // IE/Edge
+          }} >
             <IoMdCloseCircle
                 size={28}
                 className="position-absolute"

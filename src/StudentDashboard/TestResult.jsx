@@ -82,7 +82,7 @@ const TestResult = () => {
         style={{
           width:"800px",
           marginLeft:"100px",
-          marginTop:"60px",
+          marginTop:"50px",
           maxHeight: '500px',
           overflowY: 'auto',
           border: '1px solid #ccc',

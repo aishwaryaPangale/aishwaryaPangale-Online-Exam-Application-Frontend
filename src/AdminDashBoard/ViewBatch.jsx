@@ -33,7 +33,19 @@ const ViewBatch = () => {
 
   return (
     <div className="container mt-4 p-4 shadow text-center bg-transparent position-absolute start-50 top-50 translate-middle"
-    style={{ width: "900px", marginLeft: "130px"}}>
+    style={{
+      width:"800px",
+      marginLeft:"120px",
+      marginTop:"60px",
+      maxHeight: '500px',
+      overflowY: 'auto',
+      border: '1px solid #ccc',
+      borderRadius: '8px',
+      padding: '10px',
+      backgroundColor: '#f8f9fa',
+      scrollbarWidth: 'none',      // Firefox
+      msOverflowStyle: 'none'      // IE/Edge
+    }} >
       <IoMdCloseCircle
         size={28}
         className="position-absolute"

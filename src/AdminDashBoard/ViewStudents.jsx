@@ -63,7 +63,19 @@ const ViewStudent = () => {
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
   return (
-    <div className="container shadow-lg position-absolute start-50 top-50 translate-middle w-75 p-4" style={{ width: "900px", marginLeft: "130px" }}>
+    <div className="container shadow-lg position-absolute start-50 top-50 translate-middle w-75 p-4"  style={{
+      width:"900px",
+      marginLeft:"120px",
+      marginTop:"60px",
+      maxHeight: '500px',
+      overflowY: 'auto',
+      border: '1px solid #ccc',
+      borderRadius: '8px',
+      padding: '10px',
+      backgroundColor: '#f8f9fa',
+      scrollbarWidth: 'none',      // Firefox
+      msOverflowStyle: 'none'      // IE/Edge
+    }} >
       <IoMdCloseCircle
         size={28}
         className="position-absolute"
