@@ -120,7 +120,7 @@ const StartTest = () => {
         <div className="card-body">
           <h4 className="mb-3 text-center">📝 Start Test</h4>
           <p><strong>Student:</strong> {studentName}</p>
-          <p><strong>Test:</strong> {testDetails.courseName} ({testDetails.batchName})</p>
+          <p><strong>Test:</strong> {testDetails.course_name} ({testDetails.batch_name})</p>
           <p><strong>Date:</strong> {testDetails.date} | <strong>Time:</strong> {testDetails.time}</p>
           <hr />
 
