@@ -50,16 +50,23 @@ const ViewTest = () => {
             console.log("Test disabled:", disableResponse.data);
 
             // Update the action of the test after disabling it
-            const updateActionResponse = await axios.put(`http://localhost:8081/api/tests/update-action/${id}`);
+            const updateActionResponse = await axios.put(`http://localhost:8081/api/tests/submit/${id}`);
             console.log("Test action updated:", updateActionResponse.data);
 
             // Update the local state for the disabled test and action
+            // const updatedTests = tests.map(test =>
+            //     test.id === id
+            //         ? { ...test, disable: true, action: updateActionResponse.data.action } // Assuming the API responds with the updated action
+            //         : test
+            // );
+            // setTests(updatedTests);
+
             const updatedTests = tests.map(test =>
-                test.id === id
-                    ? { ...test, disable: true, action: updateActionResponse.data.action } // Assuming the API responds with the updated action
-                    : test
+                test.id === id ? updateActionResponse : test
             );
             setTests(updatedTests);
+    
+            console.log("Test updated successfully:", updatedTest);
 
         } catch (error) {
             console.error("Error disabling or updating test:", error);
