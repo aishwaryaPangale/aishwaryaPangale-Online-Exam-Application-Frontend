@@ -111,7 +111,20 @@ const CreatePaperSet = () => {
   };
 
   return (
-    <div className="container shadow p-4 bg-light rounded position-absolute start-50 top-50 translate-middle" style={{ width: "950px", marginLeft: "130px", marginTop: "80px" }}>
+    <div className="container shadow p-4 bg-light rounded position-absolute start-50 top-50 translate-middle" 
+    style={{
+      width:"800px",
+      marginLeft:"120px",
+      marginTop:"60px",
+      maxHeight: '500px',
+      overflowY: 'auto',
+      border: '1px solid #ccc',
+      borderRadius: '8px',
+      padding: '10px',
+      backgroundColor: '#f8f9fa',
+      scrollbarWidth: 'none',      // Firefox
+      msOverflowStyle: 'none'      // IE/Edge
+    }} >
       <IoMdCloseCircle
         size={28}
         className="position-absolute"
@@ -171,26 +184,31 @@ const CreatePaperSet = () => {
             <button className="btn btn-sm btn-outline-dark" onClick={handleSelectAll}>Select All</button>
           </div>
           <div
-            className="mb-3 border p-2 rounded bg-white"
-            style={{ maxHeight: "300px", overflowY: "scroll", scrollbarWidth: "thin" }}
-            onMouseEnter={fetchQuestions}
-          >
-            {questions.length === 0 ? (
-              <p className="text-muted">Hover to load questions...</p>
-            ) : (
-              questions.map((q) => (
-                <div key={q.id} className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    checked={selectedQuestions.includes(q.id)}
-                    onChange={() => handleCheckboxChange(q.id)}
-                  />
-                  <label className="form-check-label">{q.question}</label>
-                </div>
-              ))
-            )}
-          </div>
+  className="question-scroll mb-3 border p-2 rounded bg-white"
+  style={{
+    maxHeight: "300px",
+    overflowY: "scroll",
+    overflowX: "hidden"
+  }}
+  onMouseEnter={fetchQuestions}
+>
+  {questions.length === 0 ? (
+    <p className="text-muted">Hover to load questions...</p>
+  ) : (
+    questions.map((q) => (
+      <div key={q.id} className="form-check">
+        <input
+          className="form-check-input"
+          type="checkbox"
+          checked={selectedQuestions.includes(q.id)}
+          onChange={() => handleCheckboxChange(q.id)}
+        />
+        <label className="form-check-label">{q.question}</label>
+      </div>
+    ))
+  )}
+</div>
+
 
           <div className="text-center">
             <button className="btn btn-outline-danger shadow-sm" onClick={handleSubmit}>

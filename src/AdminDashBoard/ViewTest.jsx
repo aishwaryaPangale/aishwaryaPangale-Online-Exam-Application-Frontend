@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { IoMdCloseCircle } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 const ViewTest = () => {
+    const { testId } = useParams();
+
     const [tests, setTests] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
@@ -13,11 +16,12 @@ const ViewTest = () => {
     // Fetch all tests
     const fetchTests = async () => {
         try {
-            const username = localStorage.getItem('username'); // or from context/state
+            const username = localStorage.getItem('username'); 
 
-            const res = await axios.get('http://localhost:8081/api/tests/action/all', {
-                params: { username } // Replace with actual logged-in username
-            });
+            // const res = await axios.get('http://localhost:8081/api/tests/action/all', {
+            //     params: { username } 
+            // });
+            const res = await axios.get(`http://localhost:8081/api/tests/all`);
             console.log("Fetched Tests:", res.data);
             setTests(res.data);
         } catch (error) {
@@ -29,21 +33,39 @@ const ViewTest = () => {
         fetchTests();
     }, []);
 
+    const action = async (id) => {
+        try {
+            const response = await axios.put(`http://localhost:8080/test/update-action?testId=${id}`);
+            setTests(response.data);
+        } catch (error) {
+            console.error("Error fetching tests:", error);
+        }
+    };
+
     // Disable a test
     const disableTest = async (id) => {
         try {
-            const response = await axios.put(`http://localhost:8081/api/tests/disable/${id}`);
-            console.log("Test disabled:", response.data);
+            // Disable the test
+            const disableResponse = await axios.put(`http://localhost:8081/api/tests/disable/${id}`);
+            console.log("Test disabled:", disableResponse.data);
 
-            // Update only the disabled test locally
-            const updated = tests.map(test =>
-                test.id === id ? { ...test, disable: true } : test
+            // Update the action of the test after disabling it
+            const updateActionResponse = await axios.put(`http://localhost:8081/api/tests/update-action/${id}`);
+            console.log("Test action updated:", updateActionResponse.data);
+
+            // Update the local state for the disabled test and action
+            const updatedTests = tests.map(test =>
+                test.id === id
+                    ? { ...test, disable: true, action: updateActionResponse.data.action } // Assuming the API responds with the updated action
+                    : test
             );
-            setTests(updated);
+            setTests(updatedTests);
+
         } catch (error) {
-            console.error("Error disabling test:", error);
+            console.error("Error disabling or updating test:", error);
         }
     };
+
 
     // Search & Pagination without filter() – just render based on conditions
     const searchedTests = tests.filter(test =>
@@ -75,7 +97,7 @@ const ViewTest = () => {
     };
 
     return (
-        <div className="container text-center shadow-lg p-4 rounded position-absolute start-50 top-50 translate-middle" style={{ width: "900px", marginLeft: "130px" }}>
+        <div className="container mt-5 text-center shadow-lg p-4 rounded position-absolute start-50 top-50 translate-middle" style={{ width: "900px", marginLeft: "130px" }}>
             <IoMdCloseCircle
                 size={28}
                 className="position-absolute"
