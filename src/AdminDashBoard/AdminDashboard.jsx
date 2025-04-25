@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { FaUsers, FaBookOpen, FaLayerGroup } from "react-icons/fa";
+import { FaUsers, FaBookOpen, FaLayerGroup, FaUserCheck, FaUserTimes } from "react-icons/fa";
 import {
   FaHome, FaBook, FaClipboardList, FaUserGraduate,
   FaChartBar, FaSignOutAlt
@@ -17,6 +17,8 @@ const AdminDashboard = () => {
     students: 0,
     courses: 0,
     batches: 0,
+    attended: 0,
+    notAttended: 0,
   });
 
   const handleLogout = () => {
@@ -27,16 +29,20 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchCounts = async () => {
       try {
-        const [studentRes, courseRes, batchRes] = await Promise.all([
+        const [studentRes, courseRes, batchRes, attendedRes, notAttendedRes] = await Promise.all([
           axios.get("http://localhost:8081/api/students/count"),
           axios.get("http://localhost:8081/api/courses/count"),
           axios.get("http://localhost:8081/api/batches/count"),
+          axios.get("http://localhost:8081/api/attended/count"),
+          axios.get("http://localhost:8081/api/not-attended/count"),
         ]);
 
         setCounts({
           students: studentRes.data.count,
           courses: courseRes.data.count,
           batches: batchRes.data.count,
+          attended: attendedRes.data.count,
+          notAttended: notAttendedRes.data.count,
         });
       } catch (err) {
         console.error("Failed to fetch dashboard counts", err);
@@ -53,6 +59,18 @@ const AdminDashboard = () => {
           .nav-link:hover {
             color: white !important;
             border-radius: 5px;
+          }
+          .icon-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            margin: auto;
+            margin-bottom: 10px;
           }
         `}
       </style>
@@ -117,14 +135,13 @@ const AdminDashboard = () => {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-grow-1 p-4" style={{ backgroundColor: "#f8f9fa" }}>
+        <main className="flex-grow-1 p-2" style={{ backgroundColor: "#f8f9fa" }}>
           {location.pathname === "/admin" ? (
             <div>
-            <h2 className="mb-4 text-center">Welcome to Admin Dashboard</h2>
-            <div className="row">
-              <div className="col-md-4 mb-3">
-                <div className="card shadow-sm border-0 dashboard-card">
-                  <div className="card-body text-center">
+              <h2 className="mb-4 text-center">Welcome to Admin Dashboard</h2>
+              <div className="d-flex flex-row flex-wrap gap-3 justify-content-center">
+                <div className="card shadow-sm border-0 dashboard-card text-center" style={{ width: "180px" }}>
+                  <div className="card-body">
                     <div className="icon-circle bg-primary">
                       <FaUsers />
                     </div>
@@ -132,11 +149,9 @@ const AdminDashboard = () => {
                     <h3>{counts.students}</h3>
                   </div>
                 </div>
-              </div>
-          
-              <div className="col-md-4 mb-3">
-                <div className="card shadow-sm border-0 dashboard-card">
-                  <div className="card-body text-center">
+
+                <div className="card shadow-sm border-0 dashboard-card text-center" style={{ width: "180px" }}>
+                  <div className="card-body">
                     <div className="icon-circle bg-success">
                       <FaBookOpen />
                     </div>
@@ -144,11 +159,9 @@ const AdminDashboard = () => {
                     <h3>{counts.courses}</h3>
                   </div>
                 </div>
-              </div>
-          
-              <div className="col-md-4 mb-3">
-                <div className="card shadow-sm border-0 dashboard-card">
-                  <div className="card-body text-center">
+
+                <div className="card shadow-sm border-0 dashboard-card text-center" style={{ width: "180px" }}>
+                  <div className="card-body">
                     <div className="icon-circle bg-warning">
                       <FaLayerGroup />
                     </div>
@@ -156,10 +169,28 @@ const AdminDashboard = () => {
                     <h3>{counts.batches}</h3>
                   </div>
                 </div>
+
+                <div className="card shadow-sm border-0 dashboard-card text-center" style={{ width: "180px" }}>
+                  <div className="card-body">
+                    <div className="icon-circle bg-info">
+                      <FaUserCheck />
+                    </div>
+                    <h5 className="card-title text-info">Attended Students</h5>
+                    <h3>{counts.attended}</h3>
+                  </div>
+                </div>
+
+                <div className="card shadow-sm border-0 dashboard-card text-center" style={{ width: "180px" }}>
+                  <div className="card-body">
+                    <div className="icon-circle bg-danger">
+                      <FaUserTimes />
+                    </div>
+                    <h5 className="card-title text-danger">Not Attended Students</h5>
+                    <h3>{counts.notAttended}</h3>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          
           ) : (
             <Outlet />
           )}
