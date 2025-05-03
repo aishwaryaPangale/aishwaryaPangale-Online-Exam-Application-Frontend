@@ -23,6 +23,7 @@ const AddStudent = () => {
   const [message, setMessage] = useState("");
   const [courses, setCourses] = useState([]);
   const [batches, setBatches] = useState([]);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     axios
@@ -37,44 +38,68 @@ const AddStudent = () => {
   }, []);
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    validateField(name, value);
+  };
+
+  // ✅ Form validation for email and contact
+  const validateField = (name, value) => {
+    let error = "";
+
+    if (name === "email") {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}$/;
+      if (!emailRegex.test(value)) {
+        error = "Invalid email format (e.g., user@example.com)";
+      }
+    }
+
+    if (name === "contact") {
+      const contactRegex = /^\d{10}$/;
+      if (!contactRegex.test(value)) {
+        error = "Contact must be exactly 10 digits";
+      }
+    }
+
+    setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Sending data to backend:", formData);
+
+    for (const key in formData) {
+      validateField(key, formData[key]);
+      if (errors[key]) {
+        setMessage("❌ Please check information");
+        return;
+      }
+    }
 
     try {
       const response = await axios.post("http://localhost:8081/api/register", formData, {
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" },
       });
-
-      console.log("Server response:", response.data); 
 
       if (response.data === "Email already exists") {
         setMessage("❌ Email already exists");
-        setTimeout(() => setMessage(""), 2000);
       } else if (response.data === "Registered successfully") {
-        setMessage("✅ Add Student Successful!");
-        localStorage.setItem("studentName", response.data.name);
-        localStorage.setItem("username", response.data.username);
-        setTimeout(() => setMessage(""), 2000);
-
+        setMessage("✅ Student added successfully!");
+        setTimeout(() => navigate(-1), 2000);
       } else {
-        setMessage("❌ Unexpected server response.");
-        setTimeout(() => setMessage(""), 2000);
+        setMessage("❌ Unexpected server response");
       }
-
     } catch (err) {
       console.error("Registration error:", err);
       setMessage("❌ Error: " + err.message);
-      setTimeout(() => setMessage(""), 2000);
     }
+
+    setTimeout(() => setMessage(""), 3000);
   };
+
   return (
     <div
       className="container shadow p-4 bg-transparent position-absolute start-50 top-50 translate-middle"
-      style={{ width: "900px", marginLeft: "130px",marginTop:"50px",height:"500px"}}
+      style={{ width: "900px", marginLeft: "130px", marginTop: "50px", height: "500px" }}
     >
       <IoMdCloseCircle
         size={28}
@@ -82,9 +107,7 @@ const AddStudent = () => {
         style={{ top: "15px", right: "15px", cursor: "pointer", color: "#dc3545" }}
         onClick={() => navigate(-1)}
       />
-      <h4 className="text-center text-danger mb-3 ">
-        Add Student
-      </h4>
+      <h4 className="text-center text-danger mb-3">Add Student</h4>
 
       {message && (
         <p
@@ -103,69 +126,37 @@ const AddStudent = () => {
         <div className="row g-2">
           <div className="col-md-6">
             <div className="form-floating">
-              <input
-                type="text"
-                name="name"
-                className="form-control"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
+              <input type="text" name="name" className="form-control" value={formData.name} onChange={handleChange} required />
               <label>Full Name</label>
             </div>
           </div>
 
           <div className="col-md-6">
             <div className="form-floating">
-              <input
-                type="email"
-                name="email"
-                className="form-control"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
+              <input type="email" name="email" className="form-control" value={formData.email} onChange={handleChange} required />
               <label>Email Address</label>
+              {errors.email && <small className="text-danger">{errors.email}</small>}
             </div>
           </div>
 
           <div className="col-md-6">
             <div className="form-floating">
-              <input
-                type="text"
-                name="contact"
-                className="form-control"
-                value={formData.contact}
-                onChange={handleChange}
-                required
-              />
+              <input type="text" name="contact" className="form-control" value={formData.contact} onChange={handleChange} required />
               <label>Contact</label>
+              {errors.contact && <small className="text-danger">{errors.contact}</small>}
             </div>
           </div>
 
           <div className="col-md-6">
             <div className="form-floating">
-              <input
-                type="date"
-                name="birthdate"
-                className="form-control"
-                value={formData.birthdate}
-                onChange={handleChange}
-                required
-              />
+              <input type="date" name="birthdate" className="form-control" value={formData.birthdate} onChange={handleChange} required />
               <label>Birthdate</label>
             </div>
           </div>
 
           <div className="col-md-6">
             <div className="form-floating">
-              <select
-                className="form-select"
-                name="gender"
-                value={formData.gender}
-                onChange={handleChange}
-                required
-              >
+              <select className="form-select" name="gender" value={formData.gender} onChange={handleChange} required>
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -176,27 +167,14 @@ const AddStudent = () => {
 
           <div className="col-md-6">
             <div className="form-floating">
-              <input
-                type="text"
-                className="form-control"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                required
-              />
+              <input type="text" className="form-control" name="address" value={formData.address} onChange={handleChange} required />
               <label>Address</label>
             </div>
           </div>
 
           <div className="col-md-6">
             <div className="form-floating">
-              <select
-                className="form-select"
-                name="course"
-                value={formData.course}
-                onChange={handleChange}
-                required
-              >
+              <select className="form-select" name="course" value={formData.course} onChange={handleChange} required>
                 <option value="">Select Course</option>
                 {courses.map((course) => (
                   <option key={course.id} value={course.courseName}>
@@ -210,16 +188,10 @@ const AddStudent = () => {
 
           <div className="col-md-6">
             <div className="form-floating">
-              <select
-                className="form-select"
-                name="batch"
-                value={formData.batch}
-                onChange={handleChange}
-                required
-              >
+              <select className="form-select" name="batch" value={formData.batch} onChange={handleChange} required>
                 <option value="">Select Batch</option>
                 {batches.map((batch, index) => (
-                  <option key={`batch-${index}`} value={batch.batchame}>
+                  <option key={`batch-${index}`} value={batch.batchName}>
                     {batch.batchName}
                   </option>
                 ))}
@@ -230,28 +202,14 @@ const AddStudent = () => {
 
           <div className="col-md-6">
             <div className="form-floating">
-              <input
-                type="text"
-                className="form-control"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
+              <input type="text" className="form-control" name="username" value={formData.username} onChange={handleChange} required />
               <label>Username</label>
             </div>
           </div>
 
           <div className="col-md-6">
             <div className="form-floating">
-              <input
-                type="password"
-                className="form-control"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
+              <input type="password" className="form-control" name="password" value={formData.password} onChange={handleChange} required />
               <label>Password</label>
             </div>
           </div>
