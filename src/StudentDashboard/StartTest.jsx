@@ -15,6 +15,8 @@ const StartTest = () => {
 
   const studentName = localStorage.getItem("name") || "Student";
   const studentUsername = localStorage.getItem("username");
+  const studentId = parseInt(localStorage.getItem("studentId")); // or whatever your source is
+
 
   // Timer and fetch test data
   useEffect(() => {
@@ -72,42 +74,81 @@ const StartTest = () => {
   };
 
   // Submit test
+  // const handleSubmit = async () => {
+  //   const totalQuestions = questions.length;
+  //   const attemptedQuestions = Object.keys(answers).length;
+  //   const remainingQuestions = totalQuestions - attemptedQuestions;
+
+  //   // Correct answers map (for result summary)
+  //   const correctAnswerMap = {};
+  //   questions.forEach((q) => {
+  //     correctAnswerMap[q.id] = q.correct_answer; // change field if needed
+  //   });
+
+  //   const result = {
+  //     testId: parseInt(testId),
+  //     studentId: parseInt(studentId),
+  //     answers, // This must be a map of { questionId (string or int) : selectedAnswer (string) }
+  //   };
+    
+  //   console.log("Submitting test with result:", result);
+
+  //   try {
+  //     await axios.post("http://localhost:8081/api/student/submitTest", result);
+  //     await axios.post(`http://localhost:8081/api/student/submit-result?id=${studentId}&testId=${testId}`, answers);
+
+  //     navigate('/studentDashboard/testResult', {
+  //       state: {
+  //         testDetails,
+  //         answers,
+  //         totalQuestions,
+  //         attemptedQuestions,
+  //         remainingQuestions,
+  //         correctAnswerMap,
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.error("Error submitting test:", error);
+  //     alert("Failed to submit test.");
+  //   }
+  // };
+
+
   const handleSubmit = async () => {
-    const totalQuestions = questions.length;
-    const attemptedQuestions = Object.keys(answers).length;
-    const remainingQuestions = totalQuestions - attemptedQuestions;
+  const totalQuestions = questions.length;
+  const attemptedQuestions = Object.keys(answers).length;
+  const remainingQuestions = totalQuestions - attemptedQuestions;
 
-    // Correct answers map (for result summary)
-    const correctAnswerMap = {};
-    questions.forEach((q) => {
-      correctAnswerMap[q.id] = q.correct_answer; // change field if needed
-    });
+  const correctAnswerMap = {};
+  questions.forEach(q => {
+    correctAnswerMap[q.id] = q.correct_answer;
+  });
 
-    const result = {
-      testId,
-      studentUsername,
-      answers,
-    };
-
-    try {
-      await axios.post("http://localhost:8081/api/student/submitTest", result);
-      await axios.post(`http://localhost:8081/api/student/submit-result?username=${studentName}&testId=${testId}`, answers);
-
-      navigate('/studentDashboard/testResult', {
-        state: {
-          testDetails,
-          answers,
-          totalQuestions,
-          attemptedQuestions,
-          remainingQuestions,
-          correctAnswerMap,
-        },
-      });
-    } catch (error) {
-      console.error("Error submitting test:", error);
-      alert("Failed to submit test.");
-    }
+  const result = {
+    testId: parseInt(testId),
+    studentId,
+    answers
   };
+console.log("Submitting test with result:", result);
+  try {
+     await axios.post("http://localhost:8081/api/student/submitTest", result);
+ await axios.post(`http://localhost:8081/api/student/submit-result?studentId=${studentId}&testId=${testId}`, answers);
+    navigate('/studentDashboard/testResult', {
+      state: {
+        testDetails,
+        answers,
+        totalQuestions,
+        attemptedQuestions,
+        remainingQuestions,
+        correctAnswerMap,
+         },
+    });
+  } catch (error) {
+    console.error("Error submitting test:", error);
+    alert("Failed to submit test.");
+  }
+};
+
 
   const currentQuestion = questions[currentQuestionIndex];
 

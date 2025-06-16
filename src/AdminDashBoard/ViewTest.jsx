@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { IoMdCloseCircle } from "react-icons/io";
-import { useNavigate } from 'react-router-dom';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ViewTest = () => {
     const { testId } = useParams();
-
     const [tests, setTests] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
@@ -16,65 +14,30 @@ const ViewTest = () => {
     // Fetch all tests
     const fetchTests = async () => {
         try {
-            const username = localStorage.getItem('username'); 
-
-            // const res = await axios.get('http://localhost:8081/api/tests/action/all', {
-            //     params: { username } 
-            // });
-            const res = await axios.get(`http://localhost:8081/api/tests/all`);
+            const res = await axios.get("http://localhost:8081/api/tests/all");
             console.log("Fetched Tests:", res.data);
             setTests(res.data);
         } catch (error) {
             console.error("Error fetching tests:", error);
         }
     };
-    
+
     useEffect(() => {
         fetchTests();
     }, []);
 
-    const action = async (id) => {
-        try {
-            const response = await axios.put(`http://localhost:8080/test/update-action?testId=${id}`);
-            setTests(response.data);
-        } catch (error) {
-            console.error("Error fetching tests:", error);
-        }
-    };
-
-    // Disable a test
+    // Disable a test and update action
     const disableTest = async (id) => {
         try {
-            // Disable the test
-            const disableResponse = await axios.put(`http://localhost:8081/api/tests/disable/${id}`);
-            console.log("Test disabled:", disableResponse.data);
-
-            // Update the action of the test after disabling it
-            const updateActionResponse = await axios.post(`http://localhost:8081/api/tests/submit/${id}`);
-            console.log("Test action updated:", updateActionResponse.data);
-
-            // Update the local state for the disabled test and action
-            // const updatedTests = tests.map(test =>
-            //     test.id === id
-            //         ? { ...test, disable: true, action: updateActionResponse.data.action } // Assuming the API responds with the updated action
-            //         : test
-            // );
-            // setTests(updatedTests);
-
-            const updatedTests = tests.map(test =>
-                test.id === id ? updateActionResponse : test
-            );
-            setTests(updatedTests);
-    
-            console.log("Test updated successfully:", updatedTest);
-
+            await axios.put(`http://localhost:8081/api/tests/disable/${id}`);
+            await axios.post(`http://localhost:8081/api/tests/submit/${id}`);
+            fetchTests(); // 🔁 refresh the list after disabling
         } catch (error) {
             console.error("Error disabling or updating test:", error);
         }
     };
 
-
-    // Search & Pagination without filter() – just render based on conditions
+    // Filter active (non-disabled) tests by course or batch name
     const searchedTests = tests.filter(test =>
         !test.disable &&
         (
@@ -83,9 +46,7 @@ const ViewTest = () => {
         )
     );
 
-
-
-
+    // Pagination logic
     const totalPages = Math.ceil(searchedTests.length / testsPerPage);
     const indexOfLastTest = currentPage * testsPerPage;
     const indexOfFirstTest = indexOfLastTest - testsPerPage;
@@ -127,9 +88,9 @@ const ViewTest = () => {
                 />
             </div>
 
-            {/* Table */}
-            <div className="table-responsive">
-                <table className="table table-bordered">
+            {/* Test table */}
+            <div className="table-responsive hide-scrollbar" style={{ overflowX: 'scroll', maxWidth: '100%' }}>
+                <table className="table table-bordered" style={{ minWidth: '1000px' }}>
                     <thead className="table-dark text-center align-middle">
                         <tr>
                             <th>ID</th>
@@ -141,18 +102,18 @@ const ViewTest = () => {
                             <th>Action</th>
                             <th>Disable</th>
                             <th>Paper Set</th>
+                            <th>Submitted Students</th>
                         </tr>
                     </thead>
                     <tbody className="text-center align-middle">
                         {currentTests.length === 0 ? (
                             <tr>
-                                <td colSpan="9">No active tests found.</td>
+                                <td colSpan="10">No active tests found.</td>
                             </tr>
                         ) : (
-                            currentTests.map((test) =>
-
+                            currentTests.map((test) => (
                                 <tr key={test.id}>
-                                    <td>{test.id}</td> 
+                                    <td>{test.id}</td>
                                     <td>{test.batchName}</td>
                                     <td>{test.courseName}</td>
                                     <td>{test.date}</td>
@@ -162,13 +123,15 @@ const ViewTest = () => {
                                     <td>
                                         <button
                                             className={`btn btn-sm ${test.action ? 'btn-success' : 'btn-danger'}`}
-                                            onClick={() => disableTest(test.id)}>  Disable
+                                            onClick={() => disableTest(test.id)}
+                                        >
+                                            Disable
                                         </button>
                                     </td>
                                     <td>{test.ispaperSet ? 'Yes' : 'No'}</td>
+                                    <td>{test.submittedStudentIds || "No Submitted"}</td>
                                 </tr>
-                            )
-
+                            ))
                         )}
                     </tbody>
                 </table>

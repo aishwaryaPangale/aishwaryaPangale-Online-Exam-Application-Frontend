@@ -69,6 +69,8 @@ const Login = () => {
             
            localStorage.setItem("studentName", response.data.name);
            localStorage.setItem("username", response.data.username); 
+           localStorage.setItem("studentId", response.data.studentId); // Ensure backend sends this
+            console.log(response.data.studentId);
             setMessage(response.data.message || "✅ Login successful!");
             console.log("Login response data:", response.data);
 
