@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { IoMdCloseCircle } from "react-icons/io";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ViewTest = () => {
-    const { testId } = useParams();
     const [tests, setTests] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const testsPerPage = 5;
     const navigate = useNavigate();
 
-    // Fetch all tests
     const fetchTests = async () => {
         try {
             const res = await axios.get("http://localhost:8081/api/tests/all");
@@ -26,18 +24,17 @@ const ViewTest = () => {
         fetchTests();
     }, []);
 
-    // Disable a test and update action
     const disableTest = async (id) => {
+        console.log("Test ID to disable:", id); // ✅ Check this in browser console
         try {
             await axios.put(`http://localhost:8081/api/tests/disable/${id}`);
-            await axios.post(`http://localhost:8081/api/tests/submit/${id}`);
-            fetchTests(); // 🔁 refresh the list after disabling
+            await axios.put(`http://localhost:8081/api/tests/submit/${id}`);
+            fetchTests();
         } catch (error) {
             console.error("Error disabling or updating test:", error);
         }
     };
 
-    // Filter active (non-disabled) tests by course or batch name
     const searchedTests = tests.filter(test =>
         !test.disable &&
         (
@@ -46,7 +43,6 @@ const ViewTest = () => {
         )
     );
 
-    // Pagination logic
     const totalPages = Math.ceil(searchedTests.length / testsPerPage);
     const indexOfLastTest = currentPage * testsPerPage;
     const indexOfFirstTest = indexOfLastTest - testsPerPage;
@@ -74,7 +70,6 @@ const ViewTest = () => {
             />
             <h4 className="text-danger mb-4 fw-bold">View Tests</h4>
 
-            {/* Search bar */}
             <div className="mb-3 text-start">
                 <input
                     type="text"
@@ -88,7 +83,6 @@ const ViewTest = () => {
                 />
             </div>
 
-            {/* Test table */}
             <div className="table-responsive hide-scrollbar" style={{ overflowX: 'scroll', maxWidth: '100%' }}>
                 <table className="table table-bordered" style={{ minWidth: '1000px' }}>
                     <thead className="table-dark text-center align-middle">
@@ -123,9 +117,12 @@ const ViewTest = () => {
                                     <td>
                                         <button
                                             className={`btn btn-sm ${test.action ? 'btn-success' : 'btn-danger'}`}
-                                            onClick={() => disableTest(test.id)}
+                                            onClick={() => {
+                                                if (test.action) disableTest(test.id);
+                                            }}
+                                            disabled={!test.action}
                                         >
-                                            Disable
+                                            {test.action ? 'Disable' : 'Disabled'}
                                         </button>
                                     </td>
                                     <td>{test.ispaperSet ? 'Yes' : 'No'}</td>
@@ -137,7 +134,6 @@ const ViewTest = () => {
                 </table>
             </div>
 
-            {/* Pagination */}
             {totalPages > 1 && (
                 <div className="d-flex justify-content-end mt-3">
                     <div className="d-flex gap-2">
