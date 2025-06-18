@@ -25,7 +25,7 @@ const ViewTest = () => {
     }, []);
 
     const disableTest = async (id) => {
-        console.log("Test ID to disable:", id); // ✅ Check this in browser console
+        console.log("Test ID to disable:", id);
         try {
             await axios.put(`http://localhost:8081/api/tests/disable/${id}`);
             await axios.put(`http://localhost:8081/api/tests/submit/${id}`);
@@ -93,8 +93,8 @@ const ViewTest = () => {
                             <th>Date</th>
                             <th>Time</th>
                             <th>Mode</th>
+                            {/* <th>Action</th> */}
                             <th>Action</th>
-                            <th>Disable</th>
                             <th>Paper Set</th>
                             <th>Submitted Students</th>
                         </tr>
@@ -113,20 +113,19 @@ const ViewTest = () => {
                                     <td>{test.date}</td>
                                     <td>{test.time}</td>
                                     <td>{test.mode}</td>
-                                    <td>{test.action ? 'Not Attended' : 'Attended'}</td>
+                                    {/* <td>{test.action ? 'Not Attended' : 'Attended'}</td> */}
                                     <td>
-                                        <button
-                                            className={`btn btn-sm ${test.action ? 'btn-success' : 'btn-danger'}`}
-                                            onClick={() => {
-                                                if (test.action) disableTest(test.id);
-                                            }}
-                                            disabled={!test.action}
-                                        >
-                                            {test.action ? 'Disable' : 'Disabled'}
-                                        </button>
+                                        {test.submittedStudentIds
+                                            ? <span className="badge bg-primary">Attended</span>
+                                            : <span className="badge bg-warning text-dark">Not Attended</span>
+                                        }
                                     </td>
                                     <td>{test.ispaperSet ? 'Yes' : 'No'}</td>
-                                    <td>{test.submittedStudentIds || "No Submitted"}</td>
+                                    <td>{
+                                        test.submittedStudentIds
+                                            ? [...new Set(test.submittedStudentIds.split(','))].join(', ')
+                                            : "No Submitted"
+                                    }</td>
                                 </tr>
                             ))
                         )}
